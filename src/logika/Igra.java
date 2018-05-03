@@ -5,15 +5,17 @@ import java.util.LinkedList;
 
 public class Igra {
 	
-	protected int sirinaPlosce = 4;
-	protected int visinaPlosce = 4;
-	protected Polje[][] polje;
+	public int visinaPlosce;
+	public int sirinaPlosce;
+	public Polje[][] polje;
 	protected Igralec naPotezi;
 	
-	public Igra() {
-		polje = new Polje[sirinaPlosce][visinaPlosce];
-		for(int i=0; i<sirinaPlosce; i++) {
-			for(int j=0; j<visinaPlosce; j++) {
+	public Igra(int visina, int sirina) {
+		visinaPlosce = visina;
+		sirinaPlosce = sirina;
+		polje = new Polje[visinaPlosce][sirinaPlosce];
+		for(int i=0; i<visinaPlosce; i++) {
+			for(int j=0; j<sirinaPlosce; j++) {
 				polje[i][j] = Polje.prazno;
 			}
 		}
@@ -26,16 +28,16 @@ public class Igra {
 	 */
 	public boolean obstojPoteze() {
 		// LinkedList<Poteza> preostale = new LinkedList<Poteza>();
-		for (int i = 0; i < sirinaPlosce; i++) {
-			for (int j = 0; j < visinaPlosce-1; j++) {
+		for (int i = 0; i < visinaPlosce; i++) {
+			for (int j = 0; j < sirinaPlosce-1; j++) {
 				if (polje[i][j] == Polje.prazno && polje[i][j+1] == Polje.prazno) {
 					// preostale.add(new Poteza(i, j, i, j+1));
 					return true;
 				}
 			}
 		}
-		for (int i = 0; i < sirinaPlosce; i++) {
-			for (int j = 0; j < visinaPlosce-1; j++) {
+		for (int i = 0; i < visinaPlosce-1; i++) {
+			for (int j = 0; j < sirinaPlosce; j++) {
 				if (polje[i][j] == Polje.prazno && polje[i+1][j] == Polje.prazno) {
 					// preostale.add(new Poteza(i, j, i+1, j));
 					return true;
