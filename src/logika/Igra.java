@@ -5,14 +5,14 @@ import java.util.LinkedList;
 
 public class Igra {
 	
-	public int visinaPlosce;
-	public int sirinaPlosce;
+	public int visinaPlosce = 8;
+	public int sirinaPlosce = 8;
 	public Polje[][] polje;
 	protected Igralec naPotezi;
 	
-	public Igra(int visina, int sirina) {
-		visinaPlosce = visina;
-		sirinaPlosce = sirina;
+	public Igra() {
+		visinaPlosce = visinaPlosce;
+		sirinaPlosce = sirinaPlosce;
 		polje = new Polje[visinaPlosce][sirinaPlosce];
 		for(int i=0; i<visinaPlosce; i++) {
 			for(int j=0; j<sirinaPlosce; j++) {
@@ -20,6 +20,19 @@ public class Igra {
 			}
 		}
 		naPotezi = Igralec.prvi;
+	}
+	
+	/**
+	 * @param igra, kopija dane igre
+	 */
+	public Igra(Igra igra) {
+		polje = new Polje[visinaPlosce][sirinaPlosce];
+		for(int i=0; i<visinaPlosce; i++) {
+			for(int j=0; j<sirinaPlosce; j++) {
+				polje[i][j] = igra.polje[i][j];
+			}
+		}
+		naPotezi = igra.naPotezi;
 	}
 	
 	
@@ -77,16 +90,15 @@ public class Igra {
 	 * za parametre dobi koordinate obeh polj (i1, j1) in (i2, j2)
 	 * na ti dve polji postavi ploscico, ce sta polji prazni in sosedni
 	 * na vrsti je nasprotnik
-	 * @param i1 
-	 * @param j1
-	 * @param i2
-	 * @param j2
+	 * @param p Poteza
 	 * @return true, ce je bila poteza izvedena, sicer false
 	 */
-	public boolean postaviPloscico(int i1, int j1, int i2, int j2) {
-		if (polje[i1][j1] == Polje.prazno && polje[i2][j2] == Polje.prazno && (Math.abs(i1-i2) + Math.abs(j1-j2)) == 1) {
-			polje[i1][j1] = naPotezi.getPolje();
-			polje[i2][j2] = naPotezi.getPolje();
+	public boolean postaviPloscico(Poteza p) {
+		if (polje[p.getY1()][p.getX1()] == Polje.prazno &&
+				polje[p.getY2()][p.getX2()] == Polje.prazno &&
+				(Math.abs(p.getY1()-p.getY2()) + Math.abs(p.getX1()-p.getX2())) == 1) {
+			polje[p.getY1()][p.getX1()] = naPotezi.getPolje();
+			polje[p.getY2()][p.getX2()] = naPotezi.getPolje();
 			naPotezi = naPotezi.nasprotnik();
 			return true;
 		} else {

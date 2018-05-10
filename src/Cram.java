@@ -1,14 +1,13 @@
 import logika.Igra;
 import uporabniskiVmesnik.Okno;
 
-public class Glavni {
+public class Cram {
 
 	public static void main(String[] args) {
-		Okno okno = new Okno(800, 800);
+		Okno okno = new Okno();
 		okno.pack();
 		okno.setVisible(true);
-		Igra g = new Igra(4,4);
-		okno.platno.narisi(g);
+		okno.igra = new Igra();
 	}
 
 }

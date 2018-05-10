@@ -13,13 +13,14 @@ import javax.swing.JPanel;
 
 import logika.Igra;
 import logika.Polje;
+import logika.Poteza;
 import logika.Stanje;
 
 public class Platno extends JPanel implements MouseListener, MouseMotionListener, KeyListener {
 	
-	protected int sirina;
-	protected int visina;
-	protected Igra igra;
+	protected int sirina = 700;
+	protected int visina = 700;
+	protected Okno okno;
 	protected Color barvaPrazne = Color.white;
 	protected Color barvaPrvega = Color.RED;
 	protected Color barvaDrugega = Color.BLUE;
@@ -28,20 +29,20 @@ public class Platno extends JPanel implements MouseListener, MouseMotionListener
 	// shranimo polje, iz katerega postavljamo ploscico
 	protected int izbraniI = -1;
 	protected int izbraniJ = -1;
+	protected double sirinaRoba = 0.1;
 	
-	public Platno(int sirina, int visina) {
+	public Platno(Okno okno) {
 		this.sirina = sirina;
 		this.visina = visina;
-		igra = null;
+		this.okno = okno;
 		this.setBackground(barvaOkna);
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
 		this.addKeyListener(this);
 	}
 	
-	public void narisi(Igra g) {
-		igra = g;
-		repaint();
+	protected int velikostPolja() {
+		return round(Math.min(sirina, visina)/Math.max(okno.igra.sirinaPlosce, okno.igra.visinaPlosce));
 	}
 	
 	public Dimension getPreferredSize() {
@@ -53,14 +54,14 @@ public class Platno extends JPanel implements MouseListener, MouseMotionListener
 	}
 	
 	public void paintComponent(Graphics g) {
-		if (igra == null) return;
+		if (okno.igra == null) return;
 		super.paintComponent(g);
 		// risanje plosce
-		for (int i=0; i<igra.visinaPlosce; i++) {
-			for (int j=0; j<igra.sirinaPlosce; j++) {
-				if (igra.polje[i][j]==Polje.prvi) {
+		for (int i=0; i<okno.igra.visinaPlosce; i++) {
+			for (int j=0; j<okno.igra.sirinaPlosce; j++) {
+				if (okno.igra.polje[i][j]==Polje.prvi) {
 					g.setColor(barvaPrvega);
-				} else if (igra.polje[i][j]==Polje.drugi) {
+				} else if (okno.igra.polje[i][j]==Polje.drugi) {
 					g.setColor(barvaDrugega);
 				} else if (i==izbraniI && j==izbraniJ) {
 					// ce je oznacen, ga obarvamo drugace
@@ -68,21 +69,28 @@ public class Platno extends JPanel implements MouseListener, MouseMotionListener
 				} else {
 					g.setColor(barvaPrazne);
 				}
-				g.fillRect(j*Math.min(sirina, visina)/igra.sirinaPlosce + 5, i*Math.min(sirina, visina)/igra.visinaPlosce + 5, 
-						Math.min(sirina, visina)/igra.sirinaPlosce - 10,
-						Math.min(sirina, visina)/igra.visinaPlosce - 10);
+				g.fillRect(round((j+sirinaRoba/2)*velikostPolja()), round((i+sirinaRoba/2)*velikostPolja()), 
+						round((1-sirinaRoba)*velikostPolja()),
+						round((1-sirinaRoba)*velikostPolja()));
 			}
 		}
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		int izbI = round(e.getY()*igra.visinaPlosce/Math.min(sirina, visina));
-		int izbJ = round(e.getX()*igra.sirinaPlosce/Math.min(sirina, visina));
-		if (izbI >= 0 && izbI < igra.visinaPlosce && izbJ >= 0 && izbJ < igra.sirinaPlosce) {
+		// izberemo polje (najprej preverimo, da smo pritisnili na polje in en na rob)
+		int izbI = -1;
+		if (round((1-sirinaRoba)*50)>Math.abs(e.getY()*100/velikostPolja()-round(e.getY()/velikostPolja())*100-50)) {
+			izbI = round(e.getY()/velikostPolja());
+		}
+		int izbJ = -1;
+		if (round((1-sirinaRoba)*50)>Math.abs(e.getX()*100/velikostPolja()-round(e.getX()/velikostPolja())*100-50)) {
+			izbJ = round(e.getX()/velikostPolja());
+		}
+		if (izbI >= 0 && izbI < okno.igra.visinaPlosce && izbJ >= 0 && izbJ < okno.igra.sirinaPlosce) {
 			if (izbraniI == -1 && izbraniJ == -1) {
 				// ce ni oznaceno se nobeno polje, oznaci izbrano polje, ce je to se prazno
-				if (igra.polje[izbI][izbJ] == Polje.prazno) {
+				if (okno.igra.polje[izbI][izbJ] == Polje.prazno) {
 					izbraniJ = round(izbJ);
 					izbraniI = round(izbI);
 				}
@@ -90,16 +98,14 @@ public class Platno extends JPanel implements MouseListener, MouseMotionListener
 				// odstrani oznako, ce ponovno pritisnjeno isto polje
 				izbraniI = -1;
 				izbraniJ = -1;
-			} else if (igra.postaviPloscico(round(e.getY()*igra.visinaPlosce/Math.min(sirina, visina)),
-					round(e.getX()*igra.sirinaPlosce/Math.min(sirina, visina)),
-					izbraniI, izbraniJ)) {
+			} else if (okno.igra.postaviPloscico(new Poteza(izbJ, izbI, izbraniJ, izbraniI))) {
 				// naredi potezo, ce je veljavna
 				izbraniI = -1;
 				izbraniJ = -1;
 			}
 		}
-		if (igra.stanje()==Stanje.ZMAGA_PRVI) System.out.println("Zmagal je prvi igralec!");
-		else if (igra.stanje()==Stanje.ZMAGA_DRUGI) System.out.println("Zmagal je drugi igralec!");
+		if (okno.igra.stanje()==Stanje.ZMAGA_PRVI) System.out.println("Zmagal je prvi igralec!");
+		else if (okno.igra.stanje()==Stanje.ZMAGA_DRUGI) System.out.println("Zmagal je drugi igralec!");
 		repaint();
 	}
 
