@@ -32,8 +32,6 @@ public class Platno extends JPanel implements MouseListener, MouseMotionListener
 	protected double sirinaRoba = 0.1;
 	
 	public Platno(Okno okno) {
-		this.sirina = sirina;
-		this.visina = visina;
 		this.okno = okno;
 		this.setBackground(barvaOkna);
 		this.addMouseListener(this);
@@ -42,7 +40,7 @@ public class Platno extends JPanel implements MouseListener, MouseMotionListener
 	}
 	
 	protected int velikostPolja() {
-		return round(Math.min(sirina, visina)/Math.max(okno.igra.sirinaPlosce, okno.igra.visinaPlosce));
+		return round(Math.min(okno.platno.getWidth()/okno.igra.sirinaPlosce, okno.platno.getHeight()/okno.igra.visinaPlosce));
 	}
 	
 	public Dimension getPreferredSize() {
@@ -104,9 +102,7 @@ public class Platno extends JPanel implements MouseListener, MouseMotionListener
 				izbraniJ = -1;
 			}
 		}
-		if (okno.igra.stanje()==Stanje.ZMAGA_PRVI) System.out.println("Zmagal je prvi igralec!");
-		else if (okno.igra.stanje()==Stanje.ZMAGA_DRUGI) System.out.println("Zmagal je drugi igralec!");
-		repaint();
+		okno.osveziGUI();
 	}
 
 	@Override

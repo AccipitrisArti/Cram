@@ -136,13 +136,13 @@ public class Okno extends JFrame implements ActionListener {
 		
 		setJMenuBar(mb);
 		
-		nova_igra();
+		osveziGUI();
 	}
 
-	public void nova_igra() {
+	public void nova_igra(int n, int m) {
 		if (strategPrvi != null) { strategPrvi.prekini(); }
 		if (strategDrugi != null) { strategDrugi.prekini(); }
-		igra = new Igra();
+		igra = new Igra(n, m);
 		strategPrvi = new Clovek(this);
 		strategDrugi = new Racunalnik(this);
 		// Tistemu, ki je na potezi, to povemo
@@ -157,11 +157,11 @@ public class Okno extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == nova) {
-			nova_igra();
+			nova_igra(igra.visinaPlosce, igra.sirinaPlosce);
 		} else if (e.getSource() == dim) {
 			String n = JOptionPane.showInputDialog("Vnesi višino plošèe: ");
 			String m = JOptionPane.showInputDialog("Vnesi širino plošèe: ");
-			nova_igra();
+			nova_igra(Integer.parseInt(n), Integer.parseInt(m));
 		} else if (e.getSource() == rezultat) {
 			// uporabniski vmesnik steje zmage prvega in drugega igralca
 			// izpis rezultata v oknu

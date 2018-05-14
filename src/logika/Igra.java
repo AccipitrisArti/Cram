@@ -10,9 +10,9 @@ public class Igra {
 	public Polje[][] polje;
 	protected Igralec naPotezi;
 	
-	public Igra() {
-		visinaPlosce = visinaPlosce;
-		sirinaPlosce = sirinaPlosce;
+	public Igra(int visina, int sirina) {
+		visinaPlosce = visina;
+		sirinaPlosce = sirina;
 		polje = new Polje[visinaPlosce][sirinaPlosce];
 		for(int i=0; i<visinaPlosce; i++) {
 			for(int j=0; j<sirinaPlosce; j++) {
