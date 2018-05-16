@@ -7,7 +7,6 @@ public class Cram {
 		Okno okno = new Okno();
 		okno.pack();
 		okno.setVisible(true);
-		okno.igra = new Igra(8, 8);
 	}
 
 }

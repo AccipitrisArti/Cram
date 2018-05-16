@@ -7,7 +7,7 @@ public class Poteza {
 	private int x2;
 	private int y2;
 	
-	public Poteza(int x1, int y1, int x2, int y2) {
+	public Poteza(int y1, int x1, int y2, int x2) {
 		this.x1 = x1;
 		this.y1 = y1;
 		this.x2 = x2;

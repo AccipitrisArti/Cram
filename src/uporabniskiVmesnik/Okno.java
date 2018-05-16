@@ -23,6 +23,8 @@ import logika.Poteza;
 
 public class Okno extends JFrame implements ActionListener {
 	
+	public int hitrostRacunalnika = 10;
+	
 	public Platno platno;
 	
 	/**
@@ -136,14 +138,14 @@ public class Okno extends JFrame implements ActionListener {
 		
 		setJMenuBar(mb);
 		
-		osveziGUI();
+		nova_igra();
 	}
 
-	public void nova_igra(int n, int m) {
+	public void nova_igra() {
 		if (strategPrvi != null) { strategPrvi.prekini(); }
 		if (strategDrugi != null) { strategDrugi.prekini(); }
-		igra = new Igra(n, m);
-		strategPrvi = new Clovek(this);
+		igra = new Igra();
+		strategPrvi = new Racunalnik(this);
 		strategDrugi = new Racunalnik(this);
 		// Tistemu, ki je na potezi, to povemo
 		switch (igra.stanje()) {
@@ -157,11 +159,13 @@ public class Okno extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == nova) {
-			nova_igra(igra.visinaPlosce, igra.sirinaPlosce);
+			nova_igra();
 		} else if (e.getSource() == dim) {
 			String n = JOptionPane.showInputDialog("Vnesi višino plošèe: ");
 			String m = JOptionPane.showInputDialog("Vnesi širino plošèe: ");
-			nova_igra(Integer.parseInt(n), Integer.parseInt(m));
+			Igra.visinaPlosce = Integer.parseInt(n);
+			Igra.sirinaPlosce = Integer.parseInt(m);
+			nova_igra();
 		} else if (e.getSource() == rezultat) {
 			// uporabniski vmesnik steje zmage prvega in drugega igralca
 			// izpis rezultata v oknu
@@ -187,15 +191,17 @@ public class Okno extends JFrame implements ActionListener {
 		repaint();
 	}
 	
-	public void odigraj(Poteza p) {
-		igra.postaviPloscico(p);
-		osveziGUI();
-		switch (igra.stanje()) {
-		case NA_POTEZI_PRVI: strategPrvi.na_potezi(); break;
-		case NA_POTEZI_DRUGI: strategDrugi.na_potezi(); break;
-		case ZMAGA_PRVI: break;
-		case ZMAGA_DRUGI: break;
-		}
+	public boolean odigraj(Poteza p) {
+		if (igra.postaviPloscico(p)) {
+			osveziGUI();
+			switch (igra.stanje()) {
+				case NA_POTEZI_PRVI: strategPrvi.na_potezi(); break;
+				case NA_POTEZI_DRUGI: strategDrugi.na_potezi(); break;
+				case ZMAGA_PRVI: break;
+				case ZMAGA_DRUGI: break;
+			}
+			return true;
+		} else return false;
 	}
 	
 	public void osveziGUI() {
@@ -213,14 +219,14 @@ public class Okno extends JFrame implements ActionListener {
 		repaint();
 	}
 	
-	public void klikniPolje(int i1, int j1, int i2, int j2) {
+	public void klikniPolje(int i, int j) {
 		if (igra != null) {
 			switch (igra.stanje()) {
 			case NA_POTEZI_DRUGI:
-				strategDrugi.klik(i1, j1, i2, j2);
+				strategDrugi.klik(i, j);
 				break;
 			case NA_POTEZI_PRVI:
-				strategPrvi.klik(i1, j1, i2, j2);
+				strategPrvi.klik(i, j);
 				break;
 			default:
 				break;

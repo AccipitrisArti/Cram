@@ -6,11 +6,15 @@ import java.util.Random;
 import javax.swing.SwingWorker;
 
 import logika.Igra;
+import logika.Polje;
 import logika.Poteza;
 import uporabniskiVmesnik.Okno;
 
 public class NakljucnaInteligenca extends SwingWorker<Poteza, Object> {
 	private Okno master;
+	int izbI;
+	int izbJ;
+	int smer;
 	
 	public NakljucnaInteligenca(Okno master) {
 		this.master = master;
@@ -22,7 +26,7 @@ public class NakljucnaInteligenca extends SwingWorker<Poteza, Object> {
 		for (int i = 0; i < 5; i++) {
 			System.out.println("mislim...");
 			try {
-				Thread.sleep(100);
+				Thread.sleep(master.hitrostRacunalnika);
 			} catch (InterruptedException e) { }
 			if (this.isCancelled()) {
 				System.out.println("Prekinili so me!");
@@ -30,9 +34,8 @@ public class NakljucnaInteligenca extends SwingWorker<Poteza, Object> {
 			}
 		}
 		System.out.println("Igram");
-		Random r = new Random();
-		Poteza p = new Poteza(r.nextInt(igra.sirinaPlosce),r.nextInt(igra.visinaPlosce),
-				r.nextInt(igra.sirinaPlosce),r.nextInt(igra.visinaPlosce));
+		Poteza p = igra.preostalePoteze().iterator().next();
+		System.out.println(p);
 		return p;
 	}
 	

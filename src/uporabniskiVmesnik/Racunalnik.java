@@ -29,6 +29,7 @@ public class Racunalnik extends Strateg  {
 	}
 
 	@Override
-	public void klik(int i1, int j1, int i2, int j2) {
+	public void klik(int i, int j) {
 	}
+	
 }

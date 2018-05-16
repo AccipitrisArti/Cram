@@ -19,5 +19,6 @@ public abstract class Strateg {
 	 * 
 	 * Glavno okno klièe to metodo, ko uporabnik klikne na polje (i,j).
 	 */
-	public abstract void klik(int i1, int j1, int i2, int j2);
+	public abstract void klik(int i, int j);
+	
 }

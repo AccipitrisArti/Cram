@@ -86,21 +86,8 @@ public class Platno extends JPanel implements MouseListener, MouseMotionListener
 			izbJ = round(e.getX()/velikostPolja());
 		}
 		if (izbI >= 0 && izbI < okno.igra.visinaPlosce && izbJ >= 0 && izbJ < okno.igra.sirinaPlosce) {
-			if (izbraniI == -1 && izbraniJ == -1) {
-				// ce ni oznaceno se nobeno polje, oznaci izbrano polje, ce je to se prazno
-				if (okno.igra.polje[izbI][izbJ] == Polje.prazno) {
-					izbraniJ = round(izbJ);
-					izbraniI = round(izbI);
-				}
-			} else if (izbI==izbraniI && izbJ==izbraniJ) {
-				// odstrani oznako, ce ponovno pritisnjeno isto polje
-				izbraniI = -1;
-				izbraniJ = -1;
-			} else if (okno.igra.postaviPloscico(new Poteza(izbJ, izbI, izbraniJ, izbraniI))) {
-				// naredi potezo, ce je veljavna
-				izbraniI = -1;
-				izbraniJ = -1;
-			}
+			if (okno.igra.polje[izbI][izbJ] == Polje.prazno)
+				okno.klikniPolje(izbI, izbJ);
 		}
 		okno.osveziGUI();
 	}

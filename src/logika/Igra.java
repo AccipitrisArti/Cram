@@ -1,18 +1,16 @@
 package logika;
 
-import java.awt.List;
-import java.util.LinkedList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Igra {
 	
-	public int visinaPlosce = 8;
-	public int sirinaPlosce = 8;
+	public static int visinaPlosce = 50;
+	public static int sirinaPlosce = 80;
 	public Polje[][] polje;
 	protected Igralec naPotezi;
 	
-	public Igra(int visina, int sirina) {
-		visinaPlosce = visina;
-		sirinaPlosce = sirina;
+	public Igra() {
 		polje = new Polje[visinaPlosce][sirinaPlosce];
 		for(int i=0; i<visinaPlosce; i++) {
 			for(int j=0; j<sirinaPlosce; j++) {
@@ -39,25 +37,23 @@ public class Igra {
 	/**
 	 * @return true, èe obstaja še kakšna poteza
 	 */
-	public boolean obstojPoteze() {
-		// LinkedList<Poteza> preostale = new LinkedList<Poteza>();
+	public Set<Poteza> preostalePoteze() {
+		Set<Poteza> preostale = new HashSet<Poteza>();
 		for (int i = 0; i < visinaPlosce; i++) {
 			for (int j = 0; j < sirinaPlosce-1; j++) {
 				if (polje[i][j] == Polje.prazno && polje[i][j+1] == Polje.prazno) {
-					// preostale.add(new Poteza(i, j, i, j+1));
-					return true;
+					preostale.add(new Poteza(i, j, i, j+1));
 				}
 			}
 		}
 		for (int i = 0; i < visinaPlosce-1; i++) {
 			for (int j = 0; j < sirinaPlosce; j++) {
 				if (polje[i][j] == Polje.prazno && polje[i+1][j] == Polje.prazno) {
-					// preostale.add(new Poteza(i, j, i+1, j));
-					return true;
+					preostale.add(new Poteza(i, j, i+1, j));
 				}
 			}
 		}
-		return false;
+		return preostale;
 	}
 	
 	
@@ -67,7 +63,7 @@ public class Igra {
 	public Stanje stanje() {
 		// Ali imamo zmagovalca?
 		Stanje s;
-		if (obstojPoteze()) {
+		if (preostalePoteze().size() != 0) {
 			// igre še ni konec
 			if (naPotezi == Igralec.prvi) {
 				s = Stanje.NA_POTEZI_PRVI;
