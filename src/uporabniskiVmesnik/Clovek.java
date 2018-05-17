@@ -34,7 +34,7 @@ public class Clovek extends Strateg {
 			// odstrani oznako, ce ponovno pritisnjeno isto polje
 			master.platno.izbraniI = -1;
 			master.platno.izbraniJ = -1;
-		} else if (Math.abs(i-master.platno.izbraniI)+Math.abs(j-master.platno.izbraniJ) == 1) {
+		} else if (master.igra.veljavnaPoteza(i, j, master.platno.izbraniI, master.platno.izbraniJ)) {
 			if (master.odigraj(new Poteza(i, j, master.platno.izbraniI, master.platno.izbraniJ))) {
 				// naredi potezo, ce je veljavna
 				master.platno.izbraniI = -1;

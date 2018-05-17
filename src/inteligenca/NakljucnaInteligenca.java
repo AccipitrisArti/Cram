@@ -1,4 +1,4 @@
-package Inteligenca;
+package inteligenca;
 
 import java.awt.List;
 import java.util.Random;
@@ -10,32 +10,28 @@ import logika.Polje;
 import logika.Poteza;
 import uporabniskiVmesnik.Okno;
 
+/**
+ * @author MarinkoA15, PristovnikJ15
+ * razred, ki vsebuje funkcije za izracun nakljucnih potez igralca (racunalnika)
+ */
 public class NakljucnaInteligenca extends SwingWorker<Poteza, Object> {
 	private Okno master;
-	int izbI;
-	int izbJ;
-	int smer;
-	
+		
 	public NakljucnaInteligenca(Okno master) {
 		this.master = master;
 	}
 	
+	// po dolocenem casu vrne nakljucno potezo
 	@Override
 	protected Poteza doInBackground() throws Exception {
 		Igra igra = master.copyIgra();
-		for (int i = 0; i < 5; i++) {
-			System.out.println("mislim...");
-			try {
-				Thread.sleep(master.hitrostRacunalnika);
-			} catch (InterruptedException e) { }
-			if (this.isCancelled()) {
-				System.out.println("Prekinili so me!");
-				return null;
-			}
+		Thread.sleep(master.hitrostRacunalnika);
+		if (this.isCancelled()) {
+			System.out.println("Prekinili so me!");
+			return null;
 		}
-		System.out.println("Igram");
+		// iterator na preostalih potezah poskrbi za nakljucnost 
 		Poteza p = igra.preostalePoteze().iterator().next();
-		System.out.println(p);
 		return p;
 	}
 	

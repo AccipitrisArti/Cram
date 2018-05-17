@@ -16,7 +16,7 @@ import logika.Polje;
 import logika.Poteza;
 import logika.Stanje;
 
-public class Platno extends JPanel implements MouseListener, MouseMotionListener, KeyListener {
+public class Platno extends JPanel implements MouseListener {
 	
 	protected int sirina = 700;
 	protected int visina = 700;
@@ -26,20 +26,26 @@ public class Platno extends JPanel implements MouseListener, MouseMotionListener
 	protected Color barvaDrugega = Color.BLUE;
 	protected Color barvaOznacenega = Color.YELLOW;
 	protected Color barvaOkna = Color.BLACK;
-	// shranimo polje, iz katerega postavljamo ploscico
+	
+	// shranimo polje, iz katerega postavljamo ploscico (oznacena ploscica)
+	// ce je vrednost -1, polje se ni bilo izbrano
 	protected int izbraniI = -1;
 	protected int izbraniJ = -1;
+	
+	// delez sirine roba proti sirini polja
 	protected double sirinaRoba = 0.1;
 	
 	public Platno(Okno okno) {
 		this.okno = okno;
 		this.setBackground(barvaOkna);
 		this.addMouseListener(this);
-		this.addMouseMotionListener(this);
-		this.addKeyListener(this);
 	}
 	
+	/**
+	 * @return vrne dolzino roba polja
+	 */
 	protected int velikostPolja() {
+		// skrbi, da so polja v celoti izrisana
 		return round(Math.min(okno.platno.getWidth()/okno.igra.sirinaPlosce, okno.platno.getHeight()/okno.igra.visinaPlosce));
 	}
 	
@@ -57,6 +63,7 @@ public class Platno extends JPanel implements MouseListener, MouseMotionListener
 		// risanje plosce
 		for (int i=0; i<okno.igra.visinaPlosce; i++) {
 			for (int j=0; j<okno.igra.sirinaPlosce; j++) {
+				// nastavi barvo polja
 				if (okno.igra.polje[i][j]==Polje.prvi) {
 					g.setColor(barvaPrvega);
 				} else if (okno.igra.polje[i][j]==Polje.drugi) {
@@ -67,6 +74,7 @@ public class Platno extends JPanel implements MouseListener, MouseMotionListener
 				} else {
 					g.setColor(barvaPrazne);
 				}
+				// narisi kvadratek
 				g.fillRect(round((j+sirinaRoba/2)*velikostPolja()), round((i+sirinaRoba/2)*velikostPolja()), 
 						round((1-sirinaRoba)*velikostPolja()),
 						round((1-sirinaRoba)*velikostPolja()));
@@ -77,6 +85,7 @@ public class Platno extends JPanel implements MouseListener, MouseMotionListener
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// izberemo polje (najprej preverimo, da smo pritisnili na polje in en na rob)
+		// pretvorimo koordinate pritiska miske v indeksa na plosci (izbI, izbJ)
 		int izbI = -1;
 		if (round((1-sirinaRoba)*50)>Math.abs(e.getY()*100/velikostPolja()-round(e.getY()/velikostPolja())*100-50)) {
 			izbI = round(e.getY()/velikostPolja());
@@ -85,10 +94,13 @@ public class Platno extends JPanel implements MouseListener, MouseMotionListener
 		if (round((1-sirinaRoba)*50)>Math.abs(e.getX()*100/velikostPolja()-round(e.getX()/velikostPolja())*100-50)) {
 			izbJ = round(e.getX()/velikostPolja());
 		}
-		if (izbI >= 0 && izbI < okno.igra.visinaPlosce && izbJ >= 0 && izbJ < okno.igra.sirinaPlosce) {
-			if (okno.igra.polje[izbI][izbJ] == Polje.prazno)
-				okno.klikniPolje(izbI, izbJ);
-		}
+		// ce polje obstaja in je prazno, klicemo funkcijo klikniPolje iz Platno
+		if (izbI >= 0 &&
+				izbI < okno.igra.visinaPlosce &&
+				izbJ >= 0 &&
+				izbJ < okno.igra.sirinaPlosce &&
+				okno.igra.polje[izbI][izbJ] == Polje.prazno)
+					okno.klikniPolje(izbI, izbJ);
 		okno.osveziGUI();
 	}
 
@@ -113,33 +125,5 @@ public class Platno extends JPanel implements MouseListener, MouseMotionListener
 	public void mouseReleased(MouseEvent e) {
 		
 	}
-
-	@Override
-	public void mouseDragged(MouseEvent e) {
-		
-	}
-	
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-	
 	
 }

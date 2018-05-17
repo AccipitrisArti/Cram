@@ -23,8 +23,14 @@ import logika.Poteza;
 
 public class Okno extends JFrame implements ActionListener {
 	
-	public int hitrostRacunalnika = 10;
+	/**
+	 * cas, ko se racunalnik pretvarja, da razmislja
+	 */
+	public int hitrostRacunalnika = 100;
 	
+	/**
+	 * platno, kjer se izrisuje igra
+	 */
 	public Platno platno;
 	
 	/**
@@ -33,7 +39,7 @@ public class Okno extends JFrame implements ActionListener {
 	private JLabel status;
 	
 	/**
-	 * Logika igre, null èe se igra trenutno ne igra
+	 * Logika igre, null ce se igra trenutno ne igra
 	 */
 	public Igra igra;
 	
@@ -41,24 +47,32 @@ public class Okno extends JFrame implements ActionListener {
 	 * Strateg, ki postavlja rdece ploscice.
 	 */
 	private Strateg strategPrvi;
+	private String imePrvega = "PRVI";
 
 	/**
 	 * Strateg, ki postavlja modre ploscice
 	 */
 	private Strateg strategDrugi;
+	private String imeDrugega = "DRUGI";
 	
 	private JMenuItem nova = new JMenuItem("Nova igra");
-	
-	private JMenuItem dim = new JMenuItem("Dimenzije plošèe");
+	private JMenuItem dim = new JMenuItem("Dimenzije plosce");
 	private JMenuItem rezultat = new JMenuItem("Rezultat");
+	/**
+	 * omogoci spreminjanje imen igralcev,
+	 * tipe igralcev (clovek/racunalnik) in
+	 * inteligenco racunalnika
+	 */
 	private JMenuItem igralca = new JMenuItem("Nastavi imena in tipe igralcev");
 	
+	// nastavi barve
 	private JMenuItem barvaPrvega = new JMenuItem("Spremeni barvo prvega igralca");
 	private JMenuItem barvaDrugega = new JMenuItem("Spremeni barvo drugega igralca");
 	private JMenuItem barvaOznacenega = new JMenuItem("Spremeni barvo oznacenega polja");
 	private JMenuItem barvaPrazne = new JMenuItem("Spremeni barvo praznega polja");
 	private JMenuItem barvaOkna = new JMenuItem("Spremeni barvo okna");
 	
+	// pomoc uporabniku
 	private JMenuItem navodila = new JMenuItem("Navodila za uporabo");
 	private JMenuItem pravila = new JMenuItem("Pravila igre");
 	private JMenuItem izhod = new JMenuItem("Izhod");
@@ -124,7 +138,7 @@ public class Okno extends JFrame implements ActionListener {
 		
 		mb.add(izgled);
 		
-		JMenu pomoc = new JMenu("Pomoè");
+		JMenu pomoc = new JMenu("Pomoc");
 		
 		pravila.addActionListener(this);
 		pomoc.add(pravila);
@@ -138,14 +152,17 @@ public class Okno extends JFrame implements ActionListener {
 		
 		setJMenuBar(mb);
 		
-		nova_igra();
+		novaIgra();
 	}
 
-	public void nova_igra() {
+	/**
+	 * zakljuci morebitno staro in zacni novo igro
+	 */
+	public void novaIgra() {
 		if (strategPrvi != null) { strategPrvi.prekini(); }
 		if (strategDrugi != null) { strategDrugi.prekini(); }
 		igra = new Igra();
-		strategPrvi = new Racunalnik(this);
+		strategPrvi = new Clovek(this);
 		strategDrugi = new Racunalnik(this);
 		// Tistemu, ki je na potezi, to povemo
 		switch (igra.stanje()) {
@@ -159,13 +176,13 @@ public class Okno extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == nova) {
-			nova_igra();
+			novaIgra();
 		} else if (e.getSource() == dim) {
 			String n = JOptionPane.showInputDialog("Vnesi višino plošèe: ");
 			String m = JOptionPane.showInputDialog("Vnesi širino plošèe: ");
 			Igra.visinaPlosce = Integer.parseInt(n);
 			Igra.sirinaPlosce = Integer.parseInt(m);
-			nova_igra();
+			novaIgra();
 		} else if (e.getSource() == rezultat) {
 			// uporabniski vmesnik steje zmage prvega in drugega igralca
 			// izpis rezultata v oknu
@@ -191,6 +208,10 @@ public class Okno extends JFrame implements ActionListener {
 		repaint();
 	}
 	
+	/** postavi ploscico in nasprotniku rece, da je na vrsti
+	 * @param p
+	 * @return true, ce je bila poteza izvedena
+	 */
 	public boolean odigraj(Poteza p) {
 		if (igra.postaviPloscico(p)) {
 			osveziGUI();
@@ -204,21 +225,29 @@ public class Okno extends JFrame implements ActionListener {
 		} else return false;
 	}
 	
+	/**
+	 * Osvezi statusno vrstico in plosco
+	 */
 	public void osveziGUI() {
 		if (igra == null) {
 			status.setText("Igra ni v teku.");
 		}
 		else {
 			switch(igra.stanje()) {
-			case NA_POTEZI_PRVI: status.setText("Na potezi je prvi"); break;
-			case NA_POTEZI_DRUGI: status.setText("Na potezi je drugi"); break;
-			case ZMAGA_PRVI: status.setText("Zmagal je prvi"); break;
-			case ZMAGA_DRUGI: status.setText("Zmagal je drugi"); break;
+			case NA_POTEZI_PRVI: status.setForeground (platno.barvaPrvega); status.setText("Na potezi je "+imePrvega); break;
+			case NA_POTEZI_DRUGI: status.setForeground (platno.barvaDrugega); status.setText("Na potezi je "+imeDrugega); break;
+			case ZMAGA_PRVI: status.setForeground (platno.barvaPrvega); status.setText("Zmagal je "+imePrvega); break;
+			case ZMAGA_DRUGI: status.setForeground (platno.barvaDrugega); status.setText("Zmagal je "+imeDrugega); break;
 			}
 		}
 		repaint();
 	}
 	
+	/**
+	 * Igralec, ki je na vrsti ustrezno reagira na klik miske na plosco.
+	 * @param i
+	 * @param j
+	 */
 	public void klikniPolje(int i, int j) {
 		if (igra != null) {
 			switch (igra.stanje()) {

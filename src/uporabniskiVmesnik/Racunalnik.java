@@ -2,7 +2,7 @@ package uporabniskiVmesnik;
 
 import javax.swing.SwingWorker;
 
-import Inteligenca.NakljucnaInteligenca;
+import inteligenca.NakljucnaInteligenca;
 import logika.Poteza;
 
 public class Racunalnik extends Strateg  {
