@@ -19,6 +19,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import logika.Igra;
+import logika.Igralec;
 import logika.Poteza;
 
 public class Okno extends JFrame implements ActionListener {
@@ -162,8 +163,8 @@ public class Okno extends JFrame implements ActionListener {
 		if (strategPrvi != null) { strategPrvi.prekini(); }
 		if (strategDrugi != null) { strategDrugi.prekini(); }
 		igra = new Igra();
-		strategPrvi = new Clovek(this);
-		strategDrugi = new Racunalnik(this);
+		strategPrvi = new Racunalnik(this, Igralec.prvi);
+		strategDrugi = new Racunalnik(this, Igralec.drugi);
 		// Tistemu, ki je na potezi, to povemo
 		switch (igra.stanje()) {
 			case NA_POTEZI_PRVI: strategPrvi.na_potezi(); break;

@@ -2,22 +2,24 @@ package uporabniskiVmesnik;
 
 import javax.swing.SwingWorker;
 
-import inteligenca.NakljucnaInteligenca;
+import inteligenca.Minimax;
+import logika.Igralec;
 import logika.Poteza;
 
 public class Racunalnik extends Strateg  {
 	private Okno master;
+	private Igralec jaz;
 	private SwingWorker<Poteza,Object> mislec;
-	private boolean prekini;
 
-	public Racunalnik(Okno master) {
+	public Racunalnik(Okno master, Igralec jaz) {
 		this.master = master;
+		this.jaz = jaz;
 	}
 	
 	@Override
 	public void na_potezi() {
 		// Zaènemo razmišljati
-		mislec = new NakljucnaInteligenca(master);
+		mislec = new Minimax(master, 2, jaz);
 		mislec.execute();
 	}
 

@@ -5,8 +5,8 @@ import java.util.Set;
 
 public class Igra {
 	
-	public static int visinaPlosce = 4;
-	public static int sirinaPlosce = 3;
+	public static int visinaPlosce = 10;
+	public static int sirinaPlosce = 12;
 	public Polje[][] polje;
 	protected Igralec naPotezi;
 	
@@ -85,7 +85,8 @@ public class Igra {
 	 */
 	public boolean veljavnaPoteza(int i1, int j1, int i2, int j2) {
 		if (polje[i1][j1] == Polje.prazno && polje[i2][j2] == Polje.prazno &&
-				Math.abs(i1-i2)+Math.abs(j1-j2) == 1) {
+				Math.abs(i1-i2)+Math.abs(j1-j2) == 1 &&
+				i1<visinaPlosce && i2<visinaPlosce && j2<sirinaPlosce && j1<sirinaPlosce) {
 					return true;
 		}
 		return false;

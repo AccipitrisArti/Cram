@@ -1,13 +1,16 @@
 package uporabniskiVmesnik;
 
+import logika.Igralec;
 import logika.Polje;
 import logika.Poteza;
 
 public class Clovek extends Strateg {
 	private Okno master;
+	private Igralec jaz;
 	
-	public Clovek(Okno master) {
+	public Clovek(Okno master, Igralec jaz) {
 		this.master = master;
+		this.jaz = jaz;
 	}
 	
 	@Override
