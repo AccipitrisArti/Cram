@@ -5,8 +5,8 @@ import java.util.Set;
 
 public class Igra {
 	
-	public static int visinaPlosce = 10;
-	public static int sirinaPlosce = 12;
+	public static int visinaPlosce = 8;
+	public static int sirinaPlosce = 6;
 	public Polje[][] polje;
 	protected Igralec naPotezi;
 	

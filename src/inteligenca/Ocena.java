@@ -11,6 +11,7 @@ import logika.Igra;
 import logika.Igralec;
 import logika.Polje;
 import logika.Poteza;
+import uporabniskiVmesnik.Platno;
 
 /**
  * Ocena trenutne pozicije
@@ -20,40 +21,62 @@ public class Ocena {
 	public static final int PORAZ = -ZMAGA;
 	
 	/**
-	 * @param kos
-	 * @return max in min st potez na kosu (mnozici indeksov polj)
-	 */
-	private static int[] stMoznihPotez(Set<int[]> kos) {
-		int[] minMaxVrednost = new int[2];
-		
-		
-		
-		
-		
-		
-		// izracun minimalnega in maximalnega st ploscic na kosu
-		// dualen problem je iskanje max in min stevila izoliranih polj
-		return minMaxVrednost;
-	}
-	
-	/** 
 	 * @param igra
-	 * @return vrne seznam kosov (mnozice praznih polj, ki se drzijo skupaj)
+	 * @return max in min st potez do konca igre
 	 */
-	private static Set<Set<int[]>> kosi(Igra igra) {
-		KosInPreostalePoteze kInPP = new KosInPreostalePoteze(new TreeSet<int[]>(),
-				igra.preostalePoteze());
-		Set<Set<int[]>> kosi = new TreeSet<Set<int[]>>();
-		// sestavljaj nove kose, dokler imamo se preostale poteze, katerih polja se niso v nobenem kosu
-		while (kInPP.preostalePoteze.size() > 0) {
-			Poteza p = kInPP.preostalePoteze.iterator().next();
-			// definiraj razred Kos, na katerem bo funkcija dodajPrazneSosede metoda
-			kInPP.dodajPrazneSosede(new int[] {p.getY1(), p.getX1()});
-			kosi.add(kInPP.kos);
+	private static int[] minMaxPotez(Igra igra) {
+		int[][][] mM = new int[igra.visinaPlosce+3][igra.sirinaPlosce+3][2];
+		for (int i=0; i<igra.visinaPlosce+3; i++) {
+			for (int j=0; j<igra.sirinaPlosce+3; j++) {
+				mM[i][j] = new int[] {0, 0};
+				if (i>=3 && j>=3) {
+					// izracun maximuma
+					// sestejemo vrednosti v levem in zgornjem sosedu, odstejemo vrednost v levem-zgornem sosedu
+					// ce polje prazno in prazen zgornji sosed pristejemo 1,
+					// ce imajo vrednosti v levem 2x2 polju enake vsote po diagonalah
+					// simetricno za zgornje 2x2 polje, ko sta polje in levi sosed prazna
+					mM[i][j][1] = mM[i-1][j][1] +
+							mM[i][j-1][1] - mM[i-1][j-1][1];
+					if (i==3 && j>3) {
+						if (mM[i][j-1][1] - mM[i][j-2][1] == mM[i-1][j-1][1] - mM[i-1][j-2][1] &&
+								igra.polje[i-3][j-3] == Polje.prazno && igra.polje[i-3][j-4] == Polje.prazno) {
+							mM[i][j][1] = mM[i][j][1]+1;
+						}
+					} else if (i>3 && j==3) {
+						if (mM[i-1][j][1] - mM[i-2][j][1] == mM[i-1][j-1][1] - mM[i-2][j-1][1] &&
+								igra.polje[i-3][j-3] == Polje.prazno && igra.polje[i-4][j-3] == Polje.prazno) {
+							mM[i][j][1] = mM[i][j][1]+1;
+						}
+					} else if (j>3 && i>3) {
+						if ((mM[i][j-1][1] - mM[i][j-2][1] == mM[i-1][j-1][1] - mM[i-1][j-2][1] &&
+								igra.polje[i-3][j-3] == Polje.prazno && igra.polje[i-3][j-4] == Polje.prazno)||
+								(mM[i-1][j][1] - mM[i-2][j][1] == mM[i-1][j-1][1] - mM[i-2][j-1][1] &&
+								igra.polje[i-3][j-3] == Polje.prazno && igra.polje[i-4][j-3] == Polje.prazno)) {
+							mM[i][j][1] = mM[i][j][1]+1;
+						}
+					}
+				}
+			}
 		}
-		return kosi;
+		
+		// samo en zelo slab priblizek za minimum
+		for (int i=0; i<igra.visinaPlosce; i++) {
+			for (int j=0; j<igra.sirinaPlosce; j++) {
+				if (igra.polje[i][j] == Polje.prazno) {
+					mM[igra.visinaPlosce+2][igra.sirinaPlosce+2][0]++;
+				}
+			}
+		}
+		mM[igra.visinaPlosce+2][igra.sirinaPlosce+2][0] = mM[igra.visinaPlosce+2][igra.sirinaPlosce+2][0]/3;
+		
+		
+		
+		
+		
+		
+		// popravi se formulo za minimum
+		return mM[igra.visinaPlosce+2][igra.sirinaPlosce+2];
 	}
-	
 	
 	/**
 	 * @param jaz igralec, ki želi oceno
@@ -70,32 +93,40 @@ public class Ocena {
 		case NA_POTEZI_DRUGI:
 			int vrednostPrvi = 0;
 			int vrednostDrugi = 0;
+			int[] mM = minMaxPotez(igra);
 			
-			
-			
-			
+			// ocena odvisna od razlike med max in min
+			if (mM[1]-mM[0]==0) {
+				// ce je razlika 0, je rezultat fiksno dolocen
+				if (mM[1]*50/2-Platno.round(mM[1]/2)*50==0) {
+					vrednostPrvi = PORAZ/2;
+					vrednostDrugi = ZMAGA/2;
+				} else {
+					vrednostPrvi = ZMAGA/2;
+					vrednostDrugi = PORAZ/2;
+				}
+			} else {
+				vrednostPrvi = (mM[1]-mM[0])*mM[1];
+				vrednostDrugi = (mM[1]-mM[0]-1)*mM[1];
+			}
 			
 			
 			
 			
 			
 			// tu bo nastavil vrednost za prvega in za drugega
-			// Set<Set<int[]>> kosi = kosi(igra);
-			// for (Set<int[]> kos : kosi) { // dodaj stMoznihPotez(kos) v seznam ekstrtemov }
-			// iz seznama ekstremov na vseh kosih (max in min) vecjih od 1 izracuna
-			// in vrne vrednost za prvega in vrednost za drugega igralca
-			// ce je polij, ki jih pokrivajo preostale poteze (ignoriramo izolirana polja), 4n ali 4n+1 za nek n,
-			// sem v slabsi poziciji, kot sicer
-			// dobro bi bilo upostevati moznost izolacije polj, kar spremeni stevilo vseh potez do konca igre
-			// funkcija odvisna od skupnega max, min in razlike med max in min, sodosti max in min
-			// ce je razlika med max in min  v celotni igri 1 je to veliko vredno ce si na vrsti, manj ce nisi
+			// iz max in min bo izracunal vrednost za prvega in vrednost za drugega igralca
+			// ekstremne vrednosti za pozicijo so ko je min enak max, ker je rezultat ze dolocen
+			// (v tem primeru vrednost igre odvisna od tega kdo je navrsti in koliko je potez)
+			// sicer pa je igra bolj vredna, ce je razlika med min in max vecja (vec moznosti za spreminjanje rezultata)
+			// ce je razlika med max in min  v celotni igri 1 je to veliko vredno ce si na vrsti, manj ce nisi?
 			
 			
 			
 			
 			// ko je narejeno do tu, sledi le se casovna optimizacija (cim manj izracunavanja
 			// vseh preostalih potez pri razmisljanju racunalnika, lahko se izracuna enkrat ob konstrukciji igre in potem brise na objektu igra),
-			// lepsanje kode, komentiranje
+			// lepsanje kode, komentiranje, moznost (rac-rac/clovek-rac/...), izbiranje tezavnosi (beginer/...)
 			return (jaz == Igralec.drugi ? (vrednostDrugi - vrednostPrvi/2) : (vrednostPrvi - vrednostDrugi/2));
 		}
 		assert false;

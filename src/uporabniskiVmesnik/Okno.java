@@ -44,37 +44,58 @@ public class Okno extends JFrame implements ActionListener {
 	 */
 	public Igra igra;
 	
+	private TipIgre tip = TipIgre.cr;
+	private int globinaCesarja = 1;
+	private int globinaBrdausa = 3;
+	private int globinaKrpana = 5;
+	
 	/**
 	 * Strateg, ki postavlja rdece ploscice.
 	 */
 	private Strateg strategPrvi;
 	private String imePrvega = "PRVI";
-
+	private int globinaPrvega = 2;
 	/**
 	 * Strateg, ki postavlja modre ploscice
 	 */
 	private Strateg strategDrugi;
 	private String imeDrugega = "DRUGI";
+	private int globinaDrugega = 3;
 	
 	private JMenuItem nova = new JMenuItem("Nova igra");
 	private JMenuItem dim = new JMenuItem("Dimenzije plosce");
-	private JMenuItem rezultat = new JMenuItem("Rezultat");
-	/**
-	 * omogoci spreminjanje imen igralcev,
-	 * tipe igralcev (clovek/racunalnik) in
-	 * inteligenco racunalnika
-	 */
-	private JMenuItem igralca = new JMenuItem("Nastavi imena in tipe igralcev");
+	
+	// omogoci spreminjanje imen igralcev, tipe igralcev (clovek/racunalnik) in
+	// inteligenco racunalnika
+	private JMenuItem cc = new JMenuItem("Clovek vs. Clovek");
+	
+	private JMenuItem cr1 = new JMenuItem("proti avstrijskemu cesarju");
+	private JMenuItem cr2 = new JMenuItem("proti Brdausu");
+	private JMenuItem cr3 = new JMenuItem("proti Martinu Krpanu");
+	
+	private JMenuItem rc1 = new JMenuItem("proti avstrijskemu cesarju");
+	private JMenuItem rc2 = new JMenuItem("proti Brdausu");
+	private JMenuItem rc3 = new JMenuItem("proti Martinu Krpanu");
+	
+	private JMenuItem r1r1 = new JMenuItem("cesar vs. cesar");
+	private JMenuItem r2r1 = new JMenuItem("Brdaus vs. cesar");
+	private JMenuItem r3r1 = new JMenuItem("Martin Krpan vs. cesar");
+	private JMenuItem r1r2 = new JMenuItem("cesar vs. Brdaus");
+	private JMenuItem r2r2 = new JMenuItem("Brdaus vs. Brdaus");
+	private JMenuItem r3r2 = new JMenuItem("Martin Krpan vs. Brdaus");
+	private JMenuItem r1r3 = new JMenuItem("cesar vs. Martin Krpan");
+	private JMenuItem r2r3 = new JMenuItem("Brdaus vs. Martin Krpan");
+	private JMenuItem r3r3 = new JMenuItem("Martin Krpan vs. Martin Krpan");
 	
 	// nastavi barve
-	private JMenuItem barvaPrvega = new JMenuItem("Spremeni barvo prvega igralca");
-	private JMenuItem barvaDrugega = new JMenuItem("Spremeni barvo drugega igralca");
-	private JMenuItem barvaOznacenega = new JMenuItem("Spremeni barvo oznacenega polja");
-	private JMenuItem barvaPrazne = new JMenuItem("Spremeni barvo praznega polja");
-	private JMenuItem barvaOkna = new JMenuItem("Spremeni barvo okna");
+	private JMenuItem barve1 = new JMenuItem("osnovna barvna paleta 1");
+	private JMenuItem barve2 = new JMenuItem("osnovna barvna paleta 2");
+	private JMenuItem barveLava = new JMenuItem("Lava");
+	private JMenuItem barveGozd = new JMenuItem("Gozd");
+	private JMenuItem barveJama = new JMenuItem("Jama");
+	private JMenuItem barveMorje = new JMenuItem("Morje");
 	
 	// pomoc uporabniku
-	private JMenuItem navodila = new JMenuItem("Navodila za uporabo");
 	private JMenuItem pravila = new JMenuItem("Pravila igre");
 	private JMenuItem izhod = new JMenuItem("Izhod");
 	
@@ -111,42 +132,73 @@ public class Okno extends JFrame implements ActionListener {
 		
 		JMenu moznostiIgre = new JMenu("Možnosti igre");
 		
-		// preden zacnes novo igro, nastavis velikost plosce (kot v wordu velikost tabele)
+		cc.addActionListener(this);
+		moznostiIgre.add(cc);
+		
+		JMenu cr = new JMenu("Clovek vs. Racunalnik");
+		cr1.addActionListener(this);
+		cr.add(cr1);
+		cr2.addActionListener(this);
+		cr.add(cr2);
+		cr3.addActionListener(this);
+		cr.add(cr3);
+		moznostiIgre.add(cr);
+		
+		JMenu rc = new JMenu("Racunalnik vs. Clovek");
+		rc1.addActionListener(this);
+		rc.add(rc1);
+		rc2.addActionListener(this);
+		rc.add(rc2);
+		rc3.addActionListener(this);
+		rc.add(rc3);
+		moznostiIgre.add(rc);
+		
+		JMenu rr = new JMenu("Racunalnik vs. Racunalnik");
+		r1r1.addActionListener(this);
+		rr.add(r1r1);
+		r2r1.addActionListener(this);
+		rr.add(r2r1);
+		r3r1.addActionListener(this);
+		rr.add(r3r1);
+		r1r2.addActionListener(this);
+		rr.add(r1r2);
+		r2r2.addActionListener(this);
+		rr.add(r2r2);
+		r3r2.addActionListener(this);
+		rr.add(r3r2);
+		r1r3.addActionListener(this);
+		rr.add(r1r3);
+		r2r3.addActionListener(this);
+		rr.add(r2r3);
+		r3r3.addActionListener(this);
+		rr.add(r3r3);
+		moznostiIgre.add(rr);
+		
+		moznostiIgre.addSeparator();
 		dim.addActionListener(this);
 		moznostiIgre.add(dim);
-		// izpis rezultata obeh igralcev
-		rezultat.addActionListener(this);
-		moznostiIgre.add(rezultat);
-		// vsak igralec ima ime in lahko je tipa clovek ali racunalnik
-		igralca.addActionListener(this);
-		moznostiIgre.add(igralca);
 		
 		mb.add(moznostiIgre);
 		
 		JMenu izgled = new JMenu("Izgled");
 		
-		barvaPrvega.addActionListener(this);
-		izgled.add(barvaPrvega);
-		barvaDrugega.addActionListener(this);
-		izgled.add(barvaDrugega);
-		izgled.addSeparator();
-		barvaOznacenega.addActionListener(this);
-		izgled.add(barvaOznacenega);
-		barvaPrazne.addActionListener(this);
-		izgled.add(barvaPrazne);
-		barvaOkna.addActionListener(this);
-		izgled.add(barvaOkna);
+		barve1.addActionListener(this);
+		izgled.add(barve1);
+		barve2.addActionListener(this);
+		izgled.add(barve2);
+		barveLava.addActionListener(this);
+		izgled.add(barveLava);
+		barveGozd.addActionListener(this);
+		izgled.add(barveGozd);
+		barveJama.addActionListener(this);
+		izgled.add(barveJama);
+		barveMorje.addActionListener(this);
+		izgled.add(barveMorje);
 		
 		mb.add(izgled);
 		
-		JMenu pomoc = new JMenu("Pomoc");
-		
 		pravila.addActionListener(this);
-		pomoc.add(pravila);
-		navodila.addActionListener(this);
-		pomoc.add(navodila);
-		
-		mb.add(pomoc);
+		mb.add(pravila);
 		
 		izhod.addActionListener(this);
 		mb.add(izhod);
@@ -163,8 +215,19 @@ public class Okno extends JFrame implements ActionListener {
 		if (strategPrvi != null) { strategPrvi.prekini(); }
 		if (strategDrugi != null) { strategDrugi.prekini(); }
 		igra = new Igra();
-		strategPrvi = new Racunalnik(this, Igralec.prvi);
-		strategDrugi = new Racunalnik(this, Igralec.drugi);
+		if (tip == TipIgre.cc) {
+			strategPrvi = new Clovek(this, Igralec.prvi, globinaPrvega);
+			strategDrugi = new Clovek(this, Igralec.drugi, globinaDrugega);
+		} else if (tip == TipIgre.cr) {
+			strategPrvi = new Clovek(this, Igralec.prvi, globinaPrvega);
+			strategDrugi = new Racunalnik(this, Igralec.drugi, globinaDrugega);
+		} else if (tip == TipIgre.rc) {
+			strategPrvi = new Racunalnik(this, Igralec.prvi, globinaPrvega);
+			strategDrugi = new Clovek(this, Igralec.drugi, globinaDrugega);
+		} else if (tip == TipIgre.rr) {
+			strategPrvi = new Racunalnik(this, Igralec.prvi, globinaPrvega);
+			strategDrugi = new Racunalnik(this, Igralec.drugi, globinaDrugega);
+		}
 		// Tistemu, ki je na potezi, to povemo
 		switch (igra.stanje()) {
 			case NA_POTEZI_PRVI: strategPrvi.na_potezi(); break;
@@ -184,29 +247,139 @@ public class Okno extends JFrame implements ActionListener {
 			Igra.visinaPlosce = Integer.parseInt(n);
 			Igra.sirinaPlosce = Integer.parseInt(m);
 			novaIgra();
-		} else if (e.getSource() == rezultat) {
-			// uporabniski vmesnik steje zmage prvega in drugega igralca
-			// izpis rezultata v oknu
-		} else if (e.getSource() == igralca) {
-			// izbira imen in tipov igralcev (clovek ali racunalnik)
-		} else if (e.getSource() == barvaPrvega) {
-			
-		} else if (e.getSource() == barvaDrugega) {
-			
-		} else if (e.getSource() == barvaOznacenega) {
-			
-		} else if (e.getSource() == barvaPrazne) {
-			
-		} else if (e.getSource() == barvaOkna) {
-			
+		} else if (e.getSource() == cc) {
+			tip = TipIgre.cc;
+			novaIgra();
+		} else if (e.getSource() == cr1) {
+			tip = TipIgre.cr;
+			globinaDrugega = globinaCesarja;
+			novaIgra();
+		} else if (e.getSource() == cr2) {
+			tip = TipIgre.cr;
+			globinaDrugega = globinaBrdausa;
+			novaIgra();
+		} else if (e.getSource() == cr3) {
+			tip = TipIgre.cr;
+			globinaDrugega = globinaKrpana;
+			novaIgra();
+		} else if (e.getSource() == rc1) {
+			tip = TipIgre.rc;
+			globinaPrvega = globinaCesarja;
+			novaIgra();
+		} else if (e.getSource() == rc2) {
+			tip = TipIgre.rc;
+			globinaPrvega = globinaBrdausa;
+			novaIgra();
+		} else if (e.getSource() == rc3) {
+			tip = TipIgre.rc;
+			globinaPrvega = globinaKrpana;
+			novaIgra();
+		} else if (e.getSource() == r1r1) {
+			tip = TipIgre.rr;
+			globinaPrvega = globinaCesarja;
+			globinaDrugega = globinaCesarja;
+			novaIgra();
+		} else if (e.getSource() == r1r2) {
+			tip = TipIgre.rr;
+			globinaPrvega = globinaCesarja;
+			globinaDrugega = globinaBrdausa;
+			novaIgra();
+		} else if (e.getSource() == r1r3) {
+			tip = TipIgre.rr;
+			globinaPrvega = globinaCesarja;
+			globinaDrugega = globinaKrpana;
+			novaIgra();
+		} else if (e.getSource() == r2r1) {
+			tip = TipIgre.rr;
+			globinaPrvega = globinaBrdausa;
+			globinaDrugega = globinaCesarja;
+			novaIgra();
+		} else if (e.getSource() == r2r2) {
+			tip = TipIgre.rr;
+			globinaPrvega = globinaBrdausa;
+			globinaDrugega = globinaBrdausa;
+			novaIgra();
+		} else if (e.getSource() == r2r3) {
+			tip = TipIgre.rr;
+			globinaPrvega = globinaBrdausa;
+			globinaDrugega = globinaKrpana;
+			novaIgra();
+		} else if (e.getSource() == r3r1) {
+			tip = TipIgre.rr;
+			globinaPrvega = globinaKrpana;
+			globinaDrugega = globinaCesarja;
+			novaIgra();
+		} else if (e.getSource() == r3r2) {
+			tip = TipIgre.rr;
+			globinaPrvega = globinaKrpana;
+			globinaDrugega = globinaBrdausa;
+			novaIgra();
+		} else if (e.getSource() == r3r3) {
+			tip = TipIgre.rr;
+			globinaPrvega = globinaKrpana;
+			globinaDrugega = globinaKrpana;
+			novaIgra();
+		} else if (e.getSource() == barve1) {
+			platno.barvaPrazne = Color.lightGray;
+			platno.barvaPrvega = Color.darkGray;
+			platno.barvaDrugega = Color.red;
+			platno.barvaOznacenega = Color.orange;
+			platno.setBackground(Color.WHITE);
+			osveziGUI();
+		} else if (e.getSource() == barve2) {
+			platno.barvaPrazne = Color.WHITE;
+			platno.barvaPrvega = Color.orange;
+			platno.barvaDrugega = Color.blue;
+			platno.barvaOznacenega = Color.magenta;
+			platno.setBackground(Color.gray);
+			osveziGUI();
+		} else if (e.getSource() == barveLava) {
+			platno.barvaPrazne = Color.red;
+			platno.barvaPrvega = Color.gray;
+			platno.barvaDrugega = Color.lightGray;
+			platno.barvaOznacenega = Color.orange;
+			platno.setBackground(Color.darkGray);
+			osveziGUI();
+		} else if (e.getSource() == barveGozd) {
+			platno.barvaPrazne = Color.gray;
+			platno.barvaPrvega = Color.blue;
+			platno.barvaDrugega = Color.green;
+			platno.barvaOznacenega = Color.red;
+			platno.setBackground(Color.lightGray);
+			osveziGUI();
+		} else if (e.getSource() == barveJama) {
+			platno.barvaPrazne = Color.darkGray;
+			platno.barvaPrvega = Color.gray;
+			platno.barvaDrugega = Color.lightGray;
+			platno.barvaOznacenega = Color.yellow;
+			platno.setBackground(Color.BLACK);
+			osveziGUI();
+		} else if (e.getSource() == barveMorje) {
+			platno.barvaPrazne = Color.lightGray;
+			platno.barvaPrvega = Color.white;
+			platno.barvaDrugega = Color.blue;
+			platno.barvaOznacenega = Color.green;
+			platno.setBackground(Color.cyan);
+			osveziGUI();
 		} else if (e.getSource() == pravila) {
-			// pravila in cilj igre
-		} else if (e.getSource() == navodila) {
-			// navodila za uporabo programa
+			
+			JFrame oknoPravil = new JFrame();
+			setTitle("Pravila igre Cram");
+			JLabel besedilo = new JLabel();
+			besedilo.setFont(new Font(status.getFont().getName(),
+								    status.getFont().getStyle(),
+								    12));
+			besedilo.setText("Igralca izmenicno na igralno plosco \n"
+					+ "postavljata ploscice velikosti 1x2. \n"
+					+ "Ko nek igralec ne more vec postaviti \n"
+					+ "ploscice, je njegov nasprotnik zmagal.");
+			oknoPravil.getContentPane().add(besedilo);
+			oknoPravil.pack();
+			oknoPravil.setVisible(true);
+			
 		} else if (e.getSource() == izhod) {
 			dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 		}
-		repaint();
 	}
 	
 	/** postavi ploscico in nasprotniku rece, da je na vrsti

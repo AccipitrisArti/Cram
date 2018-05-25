@@ -21,11 +21,11 @@ public class Platno extends JPanel implements MouseListener {
 	protected int sirina = 700;
 	protected int visina = 700;
 	protected Okno okno;
-	protected Color barvaPrazne = Color.white;
-	protected Color barvaPrvega = Color.RED;
-	protected Color barvaDrugega = Color.BLUE;
-	protected Color barvaOznacenega = Color.YELLOW;
-	protected Color barvaOkna = Color.BLACK;
+	protected Color barvaPrazne = Color.lightGray;
+	protected Color barvaPrvega = Color.darkGray;
+	protected Color barvaDrugega = Color.red;
+	protected Color barvaOznacenega = Color.orange;
+	protected Color barvaOkna = Color.WHITE;
 	
 	// shranimo polje, iz katerega postavljamo ploscico (oznacena ploscica)
 	// ce je vrednost -1, polje se ni bilo izbrano

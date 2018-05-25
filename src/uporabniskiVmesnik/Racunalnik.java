@@ -10,16 +10,18 @@ public class Racunalnik extends Strateg  {
 	private Okno master;
 	private Igralec jaz;
 	private SwingWorker<Poteza,Object> mislec;
+	private int globinaRazmisljanja;
 
-	public Racunalnik(Okno master, Igralec jaz) {
+	public Racunalnik(Okno master, Igralec jaz, int globina) {
 		this.master = master;
 		this.jaz = jaz;
+		globinaRazmisljanja = globina;
 	}
 	
 	@Override
 	public void na_potezi() {
 		// Zaènemo razmišljati
-		mislec = new Minimax(master, 2, jaz);
+		mislec = new Minimax(master, globinaRazmisljanja, jaz);
 		mislec.execute();
 	}
 
