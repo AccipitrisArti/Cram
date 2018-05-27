@@ -254,6 +254,21 @@ public class Okno extends JFrame implements ActionListener {
 			tip = TipIgre.cr;
 			globinaDrugega = globinaCesarja;
 			novaIgra();
+			
+			
+			
+			
+			
+			// v primeru, da igra racunalnik se oknu doda platno, kjer
+			// se izpisuje "razmisljam ..." in zraven se mogoce kaj premika
+			// npr. krogci krozijo
+			
+			
+			
+			
+			
+			
+			
 		} else if (e.getSource() == cr2) {
 			tip = TipIgre.cr;
 			globinaDrugega = globinaBrdausa;
@@ -327,25 +342,25 @@ public class Okno extends JFrame implements ActionListener {
 			platno.setBackground(Color.WHITE);
 			osveziGUI();
 		} else if (e.getSource() == barve2) {
-			platno.barvaPrazne = Color.WHITE;
-			platno.barvaPrvega = Color.orange;
-			platno.barvaDrugega = Color.blue;
-			platno.barvaOznacenega = Color.magenta;
-			platno.setBackground(Color.gray);
+			platno.barvaPrazne = new Color(164,181,199);
+			platno.barvaPrvega = new Color(224, 168, 109);
+			platno.barvaDrugega = new Color(96, 49, 29);
+			platno.barvaOznacenega = new Color(253, 241, 229);
+			platno.setBackground(new Color(9,5,6));
 			osveziGUI();
 		} else if (e.getSource() == barveLava) {
-			platno.barvaPrazne = Color.red;
-			platno.barvaPrvega = Color.gray;
-			platno.barvaDrugega = Color.lightGray;
-			platno.barvaOznacenega = Color.orange;
+			platno.barvaPrazne = Color.gray;
+			platno.barvaPrvega = new Color(162, 17, 16);
+			platno.barvaDrugega = new Color(225, 57, 2);
+			platno.barvaOznacenega = Color.lightGray;
 			platno.setBackground(Color.darkGray);
 			osveziGUI();
 		} else if (e.getSource() == barveGozd) {
-			platno.barvaPrazne = Color.gray;
-			platno.barvaPrvega = Color.blue;
-			platno.barvaDrugega = Color.green;
-			platno.barvaOznacenega = Color.red;
-			platno.setBackground(Color.lightGray);
+			platno.barvaPrazne = new Color(127, 57, 2);
+			platno.barvaPrvega = new Color(27, 57, 2);
+			platno.barvaDrugega = new Color(9, 45, 7);
+			platno.barvaOznacenega = new Color(117, 112, 168);
+			platno.setBackground(new Color(89, 138, 2));
 			osveziGUI();
 		} else if (e.getSource() == barveJama) {
 			platno.barvaPrazne = Color.darkGray;
@@ -355,16 +370,16 @@ public class Okno extends JFrame implements ActionListener {
 			platno.setBackground(Color.BLACK);
 			osveziGUI();
 		} else if (e.getSource() == barveMorje) {
-			platno.barvaPrazne = Color.lightGray;
-			platno.barvaPrvega = Color.white;
-			platno.barvaDrugega = Color.blue;
-			platno.barvaOznacenega = Color.green;
-			platno.setBackground(Color.cyan);
+			platno.barvaPrazne = Color.white;
+			platno.barvaPrvega = new Color(97, 101, 143);
+			platno.barvaDrugega = new Color(41, 60, 114);
+			platno.barvaOznacenega = new Color(153, 53, 115);
+			platno.setBackground(new Color(181, 182, 253));
 			osveziGUI();
 		} else if (e.getSource() == pravila) {
 			
 			JFrame oknoPravil = new JFrame();
-			setTitle("Pravila igre Cram");
+			oknoPravil.setTitle("Pravila igre Cram");
 			JLabel besedilo = new JLabel();
 			besedilo.setFont(new Font(status.getFont().getName(),
 								    status.getFont().getStyle(),
