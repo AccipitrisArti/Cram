@@ -1,15 +1,25 @@
 package uporabniskiVmesnik;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -17,6 +27,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
 
 import logika.Igra;
 import logika.Igralec;
@@ -104,7 +115,10 @@ public class Okno extends JFrame implements ActionListener {
 		setTitle("Cram");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new GridBagLayout());
-		
+	   
+		Image icon = Toolkit.getDefaultToolkit().getImage("src/Cram-icon.png");
+	    this.setIconImage(icon);
+	    
 		platno = new Platno(this);
 		GridBagConstraints platno_layout = new GridBagConstraints();
 		platno_layout.gridx = 0;
@@ -234,6 +248,8 @@ public class Okno extends JFrame implements ActionListener {
 			case NA_POTEZI_DRUGI: strategDrugi.na_potezi(); break;
 			default: break;
 		}
+		platno.izbraniI = -1;
+		platno.izbraniJ = -1;
 		osveziGUI();
 }
 	
@@ -380,15 +396,23 @@ public class Okno extends JFrame implements ActionListener {
 			
 			JFrame oknoPravil = new JFrame();
 			oknoPravil.setTitle("Pravila igre Cram");
-			JLabel besedilo = new JLabel();
-			besedilo.setFont(new Font(status.getFont().getName(),
-								    status.getFont().getStyle(),
-								    12));
-			besedilo.setText("Igralca izmenicno na igralno plosco \n"
-					+ "postavljata ploscice velikosti 1x2. \n"
-					+ "Ko nek igralec ne more vec postaviti \n"
-					+ "ploscice, je njegov nasprotnik zmagal.");
+			oknoPravil.setPreferredSize(new Dimension(300, 200));
+			JLabel besedilo = new JLabel("<html>Igralca izmenicno na igralno plosco</br>"
+					+ "postavljata ploscice velikosti 1x2.</br>"
+					+ "Ko nek igralec ne more vec postaviti</br>"
+					+ "ploscice, je njegov nasprotnik zmagal.</html>");
+			
+			
+			
+			
+			// to bi si zelel, da izpise v vecih vrsticah
+			
+			
+			
+			
 			oknoPravil.getContentPane().add(besedilo);
+			Image icon = Toolkit.getDefaultToolkit().getImage("src/Cram-icon.png");
+		    oknoPravil.setIconImage(icon);
 			oknoPravil.pack();
 			oknoPravil.setVisible(true);
 			

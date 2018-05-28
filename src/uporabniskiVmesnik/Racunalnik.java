@@ -2,6 +2,7 @@ package uporabniskiVmesnik;
 
 import javax.swing.SwingWorker;
 
+import inteligenca.AlphaBeta;
 import inteligenca.Minimax;
 import logika.Igralec;
 import logika.Poteza;
@@ -21,7 +22,7 @@ public class Racunalnik extends Strateg  {
 	@Override
 	public void na_potezi() {
 		// Zaènemo razmišljati
-		mislec = new Minimax(master, globinaRazmisljanja, jaz);
+		mislec = new AlphaBeta(master, globinaRazmisljanja, jaz);
 		mislec.execute();
 	}
 
