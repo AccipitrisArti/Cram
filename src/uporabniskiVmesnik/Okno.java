@@ -65,12 +65,12 @@ public class Okno extends JFrame implements ActionListener {
 	 */
 	private Strateg strategPrvi;
 	private String imePrvega = "PRVI";
-	private int globinaPrvega = 2;
+	private int globinaPrvega = 1;
 	/**
 	 * Strateg, ki postavlja modre ploscice
 	 */
 	private Strateg strategDrugi;
-	private String imeDrugega = "DRUGI";
+	private String imeDrugega = "BRDAUS";
 	private int globinaDrugega = 3;
 	
 	private JMenuItem nova = new JMenuItem("Nova igra");
@@ -110,14 +110,17 @@ public class Okno extends JFrame implements ActionListener {
 	private JMenuItem pravila = new JMenuItem("Pravila igre");
 	private JMenuItem izhod = new JMenuItem("Izhod");
 	
-	public Okno() {
+	
+	Image icon = Toolkit.getDefaultToolkit().getImage("Icon/Cram-icon.png");
+	
+	public Okno() throws IOException {
 		super();
 		setTitle("Cram");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new GridBagLayout());
 	   
-		Image icon = Toolkit.getDefaultToolkit().getImage("src/Cram-icon.png");
-	    this.setIconImage(icon);
+		
+		this.setIconImage(icon);
 	    
 		platno = new Platno(this);
 		GridBagConstraints platno_layout = new GridBagConstraints();
@@ -265,90 +268,107 @@ public class Okno extends JFrame implements ActionListener {
 			novaIgra();
 		} else if (e.getSource() == cc) {
 			tip = TipIgre.cc;
+			imePrvega = "PRVI";
+			imeDrugega = "DRUGI";
 			novaIgra();
 		} else if (e.getSource() == cr1) {
 			tip = TipIgre.cr;
 			globinaDrugega = globinaCesarja;
+			imePrvega = "PRVI";
+			imeDrugega = "cesar FRANC JOZEF";
 			novaIgra();
-			
-			
-			
-			
-			
-			// v primeru, da igra racunalnik se oknu doda platno, kjer
-			// se izpisuje "razmisljam ..." in zraven se mogoce kaj premika
-			// npr. krogci krozijo
-			
-			
-			
-			
-			
-			
-			
 		} else if (e.getSource() == cr2) {
 			tip = TipIgre.cr;
 			globinaDrugega = globinaBrdausa;
+			imePrvega = "PRVI";
+			imeDrugega = "BRDAUS";
 			novaIgra();
 		} else if (e.getSource() == cr3) {
 			tip = TipIgre.cr;
 			globinaDrugega = globinaKrpana;
+			imePrvega = "PRVI";
+			imeDrugega = "MARTIN KRPAN";
 			novaIgra();
 		} else if (e.getSource() == rc1) {
 			tip = TipIgre.rc;
 			globinaPrvega = globinaCesarja;
+			imePrvega = "cesar FRANC JOZEF";
+			imeDrugega = "DRUGI";
 			novaIgra();
 		} else if (e.getSource() == rc2) {
 			tip = TipIgre.rc;
 			globinaPrvega = globinaBrdausa;
+			imePrvega = "BRDAUS";
+			imeDrugega = "DRUGI";
 			novaIgra();
 		} else if (e.getSource() == rc3) {
 			tip = TipIgre.rc;
 			globinaPrvega = globinaKrpana;
+			imePrvega = "MARTIN KRPAN";
+			imeDrugega = "DRUGI";
 			novaIgra();
 		} else if (e.getSource() == r1r1) {
 			tip = TipIgre.rr;
 			globinaPrvega = globinaCesarja;
 			globinaDrugega = globinaCesarja;
+			imePrvega = "cesar FRANC JOZEF";
+			imeDrugega = "cesar FRANC JOZEF";
 			novaIgra();
 		} else if (e.getSource() == r1r2) {
 			tip = TipIgre.rr;
 			globinaPrvega = globinaCesarja;
 			globinaDrugega = globinaBrdausa;
+			imePrvega = "cesar FRANC JOZEF";
+			imeDrugega = "BRDAUS";
 			novaIgra();
 		} else if (e.getSource() == r1r3) {
 			tip = TipIgre.rr;
 			globinaPrvega = globinaCesarja;
 			globinaDrugega = globinaKrpana;
+			imePrvega = "cesar FRANC JOZEF";
+			imeDrugega = "MARTIN KRPAN";
 			novaIgra();
 		} else if (e.getSource() == r2r1) {
 			tip = TipIgre.rr;
 			globinaPrvega = globinaBrdausa;
 			globinaDrugega = globinaCesarja;
+			imePrvega = "BRDAUS";
+			imeDrugega = "cesar FRANC JOZEF";
 			novaIgra();
 		} else if (e.getSource() == r2r2) {
 			tip = TipIgre.rr;
 			globinaPrvega = globinaBrdausa;
 			globinaDrugega = globinaBrdausa;
+			imePrvega = "BRDAUS";
+			imeDrugega = "BRDAUS";
 			novaIgra();
 		} else if (e.getSource() == r2r3) {
 			tip = TipIgre.rr;
 			globinaPrvega = globinaBrdausa;
 			globinaDrugega = globinaKrpana;
+			imePrvega = "BRDAUS";
+			imeDrugega = "MARTIN KRPAN";
 			novaIgra();
 		} else if (e.getSource() == r3r1) {
 			tip = TipIgre.rr;
 			globinaPrvega = globinaKrpana;
 			globinaDrugega = globinaCesarja;
+			imePrvega = "MARTIN KRPAN";
+			imeDrugega = "cesar FRANC JOZEF";
 			novaIgra();
 		} else if (e.getSource() == r3r2) {
 			tip = TipIgre.rr;
 			globinaPrvega = globinaKrpana;
 			globinaDrugega = globinaBrdausa;
+			imePrvega = "MARTIN KRPAN";
+			imeDrugega = "BRDAUS";
 			novaIgra();
 		} else if (e.getSource() == r3r3) {
 			tip = TipIgre.rr;
 			globinaPrvega = globinaKrpana;
 			globinaDrugega = globinaKrpana;
+			imePrvega = "MARTIN KRPAN";
+			imeDrugega = "MARTIN KRPAN";
 			novaIgra();
 		} else if (e.getSource() == barve1) {
 			platno.barvaPrazne = Color.lightGray;
@@ -401,18 +421,8 @@ public class Okno extends JFrame implements ActionListener {
 					+ "postavljata ploscice velikosti 1x2.</br>"
 					+ "Ko nek igralec ne more vec postaviti</br>"
 					+ "ploscice, je njegov nasprotnik zmagal.</html>");
-			
-			
-			
-			
-			// to bi si zelel, da izpise v vecih vrsticah
-			
-			
-			
-			
 			oknoPravil.getContentPane().add(besedilo);
-			Image icon = Toolkit.getDefaultToolkit().getImage("src/Cram-icon.png");
-		    oknoPravil.setIconImage(icon);
+			oknoPravil.setIconImage(icon);
 			oknoPravil.pack();
 			oknoPravil.setVisible(true);
 			
@@ -447,8 +457,16 @@ public class Okno extends JFrame implements ActionListener {
 		}
 		else {
 			switch(igra.stanje()) {
-			case NA_POTEZI_PRVI: status.setForeground (platno.barvaPrvega); status.setText("Na potezi je "+imePrvega); break;
-			case NA_POTEZI_DRUGI: status.setForeground (platno.barvaDrugega); status.setText("Na potezi je "+imeDrugega); break;
+			case NA_POTEZI_PRVI: {
+				status.setForeground (platno.barvaPrvega);
+				if (tip == TipIgre.rc || tip == TipIgre.rr) status.setText(imePrvega+" razmislja ...");
+				else status.setText("Na potezi je "+imePrvega);
+				break;}
+			case NA_POTEZI_DRUGI: {
+				status.setForeground (platno.barvaDrugega);
+				if (tip == TipIgre.cr || tip == TipIgre.rr) status.setText(imeDrugega+" razmislja ...");
+				else status.setText("Na potezi je "+imeDrugega);
+				break;}
 			case ZMAGA_PRVI: status.setForeground (platno.barvaPrvega); status.setText("Zmagal je "+imePrvega); break;
 			case ZMAGA_DRUGI: status.setForeground (platno.barvaDrugega); status.setText("Zmagal je "+imeDrugega); break;
 			}

@@ -1,5 +1,9 @@
 package inteligenca;
 
+import java.sql.Time;
+import java.time.LocalTime;
+import java.util.Timer;
+
 import javax.swing.SwingWorker;
 
 import logika.Igra;
@@ -37,6 +41,7 @@ public class AlphaBeta  extends SwingWorker<Poteza, Object> {
 	@Override
 	protected Poteza doInBackground() throws Exception {
 		Igra igra = master.copyIgra();
+		LocalTime cas = LocalTime.now();
 		OcenjenaPoteza p = alphaBeta(0, alpha, beta, igra);
 		assert (p.poteza != null);
 		return p.poteza;
