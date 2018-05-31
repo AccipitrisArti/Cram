@@ -18,8 +18,8 @@ import logika.Stanje;
 
 public class Platno extends JPanel implements MouseListener {
 	
-	protected int sirina = 800;
-	protected int visina = 600;
+	protected int sirina = 500;
+	protected int visina = 400;
 	protected Okno okno;
 	protected Color barvaPrazne = Color.lightGray;
 	protected Color barvaPrvega = Color.darkGray;

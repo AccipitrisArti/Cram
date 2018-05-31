@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -74,7 +75,7 @@ public class Okno extends JFrame implements ActionListener {
 	private int globinaDrugega = 3;
 	
 	private JMenuItem nova = new JMenuItem("Nova igra");
-	private JMenuItem dim = new JMenuItem("Dimenzije plosce");
+	private JMenuItem dim = new JMenuItem("Dimenzije plošče");
 	
 	// omogoci spreminjanje imen igralcev, tipe igralcev (clovek/racunalnik) in
 	// inteligenco racunalnika
@@ -131,7 +132,7 @@ public class Okno extends JFrame implements ActionListener {
 		platno_layout.weighty = 1.0;
 		getContentPane().add(platno, platno_layout);
 		
-		// statusna vrstica za sporo�ila
+		// statusna vrstica za sporo�ila
 		status = new JLabel();
 		status.setFont(new Font(status.getFont().getName(),
 							    status.getFont().getStyle(),
@@ -147,12 +148,12 @@ public class Okno extends JFrame implements ActionListener {
 		nova.addActionListener(this);
 		mb.add(nova);
 		
-		JMenu moznostiIgre = new JMenu("Mo�nosti igre");
+		JMenu moznostiIgre = new JMenu("Možnosti igre");
 		
 		cc.addActionListener(this);
 		moznostiIgre.add(cc);
 		
-		JMenu cr = new JMenu("Clovek vs. Racunalnik");
+		JMenu cr = new JMenu("Človek vs. Računalnik");
 		cr1.addActionListener(this);
 		cr.add(cr1);
 		cr2.addActionListener(this);
@@ -161,7 +162,7 @@ public class Okno extends JFrame implements ActionListener {
 		cr.add(cr3);
 		moznostiIgre.add(cr);
 		
-		JMenu rc = new JMenu("Racunalnik vs. Clovek");
+		JMenu rc = new JMenu("Računalnik vs. Človek");
 		rc1.addActionListener(this);
 		rc.add(rc1);
 		rc2.addActionListener(this);
@@ -170,7 +171,7 @@ public class Okno extends JFrame implements ActionListener {
 		rc.add(rc3);
 		moznostiIgre.add(rc);
 		
-		JMenu rr = new JMenu("Racunalnik vs. Racunalnik");
+		JMenu rr = new JMenu("Računalnik vs. Računalnik");
 		r1r1.addActionListener(this);
 		rr.add(r1r1);
 		r2r1.addActionListener(this);
@@ -261,8 +262,8 @@ public class Okno extends JFrame implements ActionListener {
 		if (e.getSource() == nova) {
 			novaIgra();
 		} else if (e.getSource() == dim) {
-			String n = JOptionPane.showInputDialog("Vnesi vi�ino plo��e: ");
-			String m = JOptionPane.showInputDialog("Vnesi �irino plo��e: ");
+			String n = JOptionPane.showInputDialog("Vnesi višino plošče: ");
+			String m = JOptionPane.showInputDialog("Vnesi širino plošče: ");
 			Igra.visinaPlosce = Integer.parseInt(n);
 			Igra.sirinaPlosce = Integer.parseInt(m);
 			novaIgra();
@@ -275,7 +276,7 @@ public class Okno extends JFrame implements ActionListener {
 			tip = TipIgre.cr;
 			globinaDrugega = globinaCesarja;
 			imePrvega = "PRVI";
-			imeDrugega = "cesar FRANC JOZEF";
+			imeDrugega = "cesar FRANC JOŽEF";
 			novaIgra();
 		} else if (e.getSource() == cr2) {
 			tip = TipIgre.cr;
@@ -292,7 +293,7 @@ public class Okno extends JFrame implements ActionListener {
 		} else if (e.getSource() == rc1) {
 			tip = TipIgre.rc;
 			globinaPrvega = globinaCesarja;
-			imePrvega = "cesar FRANC JOZEF";
+			imePrvega = "cesar FRANC JOŽEF";
 			imeDrugega = "DRUGI";
 			novaIgra();
 		} else if (e.getSource() == rc2) {
@@ -311,21 +312,21 @@ public class Okno extends JFrame implements ActionListener {
 			tip = TipIgre.rr;
 			globinaPrvega = globinaCesarja;
 			globinaDrugega = globinaCesarja;
-			imePrvega = "cesar FRANC JOZEF";
-			imeDrugega = "cesar FRANC JOZEF";
+			imePrvega = "cesar FRANC JOŽEF";
+			imeDrugega = "cesar FRANC JOŽEF";
 			novaIgra();
 		} else if (e.getSource() == r1r2) {
 			tip = TipIgre.rr;
 			globinaPrvega = globinaCesarja;
 			globinaDrugega = globinaBrdausa;
-			imePrvega = "cesar FRANC JOZEF";
+			imePrvega = "cesar FRANC JOŽEF";
 			imeDrugega = "BRDAUS";
 			novaIgra();
 		} else if (e.getSource() == r1r3) {
 			tip = TipIgre.rr;
 			globinaPrvega = globinaCesarja;
 			globinaDrugega = globinaKrpana;
-			imePrvega = "cesar FRANC JOZEF";
+			imePrvega = "cesar FRANC JOŽEF";
 			imeDrugega = "MARTIN KRPAN";
 			novaIgra();
 		} else if (e.getSource() == r2r1) {
@@ -333,7 +334,7 @@ public class Okno extends JFrame implements ActionListener {
 			globinaPrvega = globinaBrdausa;
 			globinaDrugega = globinaCesarja;
 			imePrvega = "BRDAUS";
-			imeDrugega = "cesar FRANC JOZEF";
+			imeDrugega = "cesar FRANC JOŽEF";
 			novaIgra();
 		} else if (e.getSource() == r2r2) {
 			tip = TipIgre.rr;
@@ -354,7 +355,7 @@ public class Okno extends JFrame implements ActionListener {
 			globinaPrvega = globinaKrpana;
 			globinaDrugega = globinaCesarja;
 			imePrvega = "MARTIN KRPAN";
-			imeDrugega = "cesar FRANC JOZEF";
+			imeDrugega = "cesar FRANC JOŽEF";
 			novaIgra();
 		} else if (e.getSource() == r3r2) {
 			tip = TipIgre.rr;
@@ -417,12 +418,16 @@ public class Okno extends JFrame implements ActionListener {
 			JFrame oknoPravil = new JFrame();
 			oknoPravil.setTitle("Pravila igre Cram");
 			oknoPravil.setPreferredSize(new Dimension(300, 200));
-			JLabel besedilo = new JLabel("<html>Igralca izmenicno na igralno plosco</br>"
-					+ "postavljata ploscice velikosti 1x2.</br>"
-					+ "Ko nek igralec ne more vec postaviti</br>"
-					+ "ploscice, je njegov nasprotnik zmagal.</html>");
+			JLabel besedilo = new JLabel("<html><p style='margin: 10pt'>Igralca izmenično na igralno ploščo </br>"
+					+ "postavljata ploščice velikosti 1x2. </br>"
+					+ "Ko nek igralec ne more več postaviti </br>"
+					+ "ploščice, je njegov nasprotnik zmagal.</p>"
+					+ "<p style='margin: 10pt'>"
+					+ "Za postavljanje ploščice zaporedoma pritisni </br>"
+					+ "sosednji polji. Izbiro odstrani s ponovnim klikom.</html>");
 			oknoPravil.getContentPane().add(besedilo);
 			oknoPravil.setIconImage(icon);
+			oknoPravil.setLocationRelativeTo(this);
 			oknoPravil.pack();
 			oknoPravil.setVisible(true);
 			
