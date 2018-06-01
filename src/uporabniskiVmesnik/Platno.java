@@ -3,23 +3,19 @@ package uporabniskiVmesnik;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 
 import javax.swing.JPanel;
 
 import logika.Igra;
 import logika.Polje;
-import logika.Poteza;
-import logika.Stanje;
 
+@SuppressWarnings("serial")
 public class Platno extends JPanel implements MouseListener {
 	
-	protected int sirina = 500;
-	protected int visina = 400;
+	protected int sirina = 800;
+	protected int visina = 640;
 	protected Okno okno;
 	protected Color barvaPrazne = Color.lightGray;
 	protected Color barvaPrvega = Color.darkGray;
@@ -46,7 +42,7 @@ public class Platno extends JPanel implements MouseListener {
 	 */
 	protected int velikostPolja() {
 		// skrbi, da so polja v celoti izrisana
-		return round(Math.min(okno.platno.getWidth()/okno.igra.sirinaPlosce, okno.platno.getHeight()/okno.igra.visinaPlosce));
+		return round(Math.min(okno.platno.getWidth()/Igra.sirinaPlosce, okno.platno.getHeight()/Igra.visinaPlosce));
 	}
 	
 	public Dimension getPreferredSize() {
@@ -61,8 +57,8 @@ public class Platno extends JPanel implements MouseListener {
 		if (okno.igra == null) return;
 		super.paintComponent(g);
 		// risanje plosce
-		for (int i=0; i<okno.igra.visinaPlosce; i++) {
-			for (int j=0; j<okno.igra.sirinaPlosce; j++) {
+		for (int i=0; i<Igra.visinaPlosce; i++) {
+			for (int j=0; j<Igra.sirinaPlosce; j++) {
 				// nastavi barvo polja
 				if (okno.igra.polje[i][j]==Polje.prvi) {
 					g.setColor(barvaPrvega);
@@ -96,9 +92,9 @@ public class Platno extends JPanel implements MouseListener {
 		}
 		// ce polje obstaja in je prazno, klicemo funkcijo klikniPolje iz Platno
 		if (izbI >= 0 &&
-				izbI < okno.igra.visinaPlosce &&
+				izbI < Igra.visinaPlosce &&
 				izbJ >= 0 &&
-				izbJ < okno.igra.sirinaPlosce &&
+				izbJ < Igra.sirinaPlosce &&
 				okno.igra.polje[izbI][izbJ] == Polje.prazno)
 					okno.klikniPolje(izbI, izbJ);
 		okno.osveziGUI();

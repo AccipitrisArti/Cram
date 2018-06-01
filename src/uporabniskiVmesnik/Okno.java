@@ -6,36 +6,26 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
-import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-import java.util.StringTokenizer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
 
 import logika.Igra;
 import logika.Igralec;
 import logika.Poteza;
 
+@SuppressWarnings("serial")
 public class Okno extends JFrame implements ActionListener {
-	
+
 	/**
 	 * cas, ko se racunalnik pretvarja, da razmislja
 	 */
@@ -65,21 +55,17 @@ public class Okno extends JFrame implements ActionListener {
 	 * Strateg, ki postavlja rdece ploscice.
 	 */
 	private Strateg strategPrvi;
-	private String imePrvega = "PRVI";
-	private int globinaPrvega = 1;
 	/**
 	 * Strateg, ki postavlja modre ploscice
 	 */
 	private Strateg strategDrugi;
-	private String imeDrugega = "BRDAUS";
-	private int globinaDrugega = 3;
 	
 	private JMenuItem nova = new JMenuItem("Nova igra");
 	private JMenuItem dim = new JMenuItem("Dimenzije plošče");
 	
 	// omogoci spreminjanje imen igralcev, tipe igralcev (clovek/racunalnik) in
 	// inteligenco racunalnika
-	private JMenuItem cc = new JMenuItem("Clovek vs. Clovek");
+	private JMenuItem cc = new JMenuItem("Človek vs. Človek");
 	
 	private JMenuItem cr1 = new JMenuItem("proti avstrijskemu cesarju");
 	private JMenuItem cr2 = new JMenuItem("proti Brdausu");
@@ -119,7 +105,6 @@ public class Okno extends JFrame implements ActionListener {
 		setTitle("Cram");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new GridBagLayout());
-	   
 		
 		this.setIconImage(icon);
 	    
@@ -142,6 +127,9 @@ public class Okno extends JFrame implements ActionListener {
 		status_layout.gridy = 1;
 		status_layout.anchor = GridBagConstraints.CENTER;
 		getContentPane().add(status, status_layout);
+		
+		this.setLocationRelativeTo(null);
+		this.setLocation(this.getX()-this.platno.sirina/2, this.getY()-this.platno.visina/2);
 		
 		JMenuBar mb = new JMenuBar();
 		
@@ -234,17 +222,17 @@ public class Okno extends JFrame implements ActionListener {
 		if (strategDrugi != null) { strategDrugi.prekini(); }
 		igra = new Igra();
 		if (tip == TipIgre.cc) {
-			strategPrvi = new Clovek(this, Igralec.prvi, globinaPrvega);
-			strategDrugi = new Clovek(this, Igralec.drugi, globinaDrugega);
+			strategPrvi = new Clovek(this, Igralec.prvi, tip.globinaPrvega);
+			strategDrugi = new Clovek(this, Igralec.drugi, tip.globinaDrugega);
 		} else if (tip == TipIgre.cr) {
-			strategPrvi = new Clovek(this, Igralec.prvi, globinaPrvega);
-			strategDrugi = new Racunalnik(this, Igralec.drugi, globinaDrugega);
+			strategPrvi = new Clovek(this, Igralec.prvi, tip.globinaPrvega);
+			strategDrugi = new Racunalnik(this, Igralec.drugi, tip.globinaDrugega);
 		} else if (tip == TipIgre.rc) {
-			strategPrvi = new Racunalnik(this, Igralec.prvi, globinaPrvega);
-			strategDrugi = new Clovek(this, Igralec.drugi, globinaDrugega);
+			strategPrvi = new Racunalnik(this, Igralec.prvi, tip.globinaPrvega);
+			strategDrugi = new Clovek(this, Igralec.drugi, tip.globinaDrugega);
 		} else if (tip == TipIgre.rr) {
-			strategPrvi = new Racunalnik(this, Igralec.prvi, globinaPrvega);
-			strategDrugi = new Racunalnik(this, Igralec.drugi, globinaDrugega);
+			strategPrvi = new Racunalnik(this, Igralec.prvi, tip.globinaPrvega);
+			strategDrugi = new Racunalnik(this, Igralec.drugi, tip.globinaDrugega);
 		}
 		// Tistemu, ki je na potezi, to povemo
 		switch (igra.stanje()) {
@@ -269,107 +257,75 @@ public class Okno extends JFrame implements ActionListener {
 			novaIgra();
 		} else if (e.getSource() == cc) {
 			tip = TipIgre.cc;
-			imePrvega = "PRVI";
-			imeDrugega = "DRUGI";
 			novaIgra();
 		} else if (e.getSource() == cr1) {
 			tip = TipIgre.cr;
-			globinaDrugega = globinaCesarja;
-			imePrvega = "PRVI";
-			imeDrugega = "cesar FRANC JOŽEF";
+			tip.globinaDrugega = globinaCesarja;
 			novaIgra();
 		} else if (e.getSource() == cr2) {
 			tip = TipIgre.cr;
-			globinaDrugega = globinaBrdausa;
-			imePrvega = "PRVI";
-			imeDrugega = "BRDAUS";
+			tip.globinaDrugega = globinaBrdausa;
 			novaIgra();
 		} else if (e.getSource() == cr3) {
 			tip = TipIgre.cr;
-			globinaDrugega = globinaKrpana;
-			imePrvega = "PRVI";
-			imeDrugega = "MARTIN KRPAN";
+			tip.globinaDrugega = globinaKrpana;
 			novaIgra();
 		} else if (e.getSource() == rc1) {
 			tip = TipIgre.rc;
-			globinaPrvega = globinaCesarja;
-			imePrvega = "cesar FRANC JOŽEF";
-			imeDrugega = "DRUGI";
+			tip.globinaPrvega = globinaCesarja;
 			novaIgra();
 		} else if (e.getSource() == rc2) {
 			tip = TipIgre.rc;
-			globinaPrvega = globinaBrdausa;
-			imePrvega = "BRDAUS";
-			imeDrugega = "DRUGI";
+			tip.globinaPrvega = globinaBrdausa;
 			novaIgra();
 		} else if (e.getSource() == rc3) {
 			tip = TipIgre.rc;
-			globinaPrvega = globinaKrpana;
-			imePrvega = "MARTIN KRPAN";
-			imeDrugega = "DRUGI";
+			tip.globinaPrvega = globinaKrpana;
 			novaIgra();
 		} else if (e.getSource() == r1r1) {
 			tip = TipIgre.rr;
-			globinaPrvega = globinaCesarja;
-			globinaDrugega = globinaCesarja;
-			imePrvega = "cesar FRANC JOŽEF";
-			imeDrugega = "cesar FRANC JOŽEF";
+			tip.globinaPrvega = globinaCesarja;
+			tip.globinaDrugega = globinaCesarja;
 			novaIgra();
 		} else if (e.getSource() == r1r2) {
 			tip = TipIgre.rr;
-			globinaPrvega = globinaCesarja;
-			globinaDrugega = globinaBrdausa;
-			imePrvega = "cesar FRANC JOŽEF";
-			imeDrugega = "BRDAUS";
+			tip.globinaPrvega = globinaCesarja;
+			tip.globinaDrugega = globinaBrdausa;
 			novaIgra();
 		} else if (e.getSource() == r1r3) {
 			tip = TipIgre.rr;
-			globinaPrvega = globinaCesarja;
-			globinaDrugega = globinaKrpana;
-			imePrvega = "cesar FRANC JOŽEF";
-			imeDrugega = "MARTIN KRPAN";
+			tip.globinaPrvega = globinaCesarja;
+			tip.globinaDrugega = globinaKrpana;
 			novaIgra();
 		} else if (e.getSource() == r2r1) {
 			tip = TipIgre.rr;
-			globinaPrvega = globinaBrdausa;
-			globinaDrugega = globinaCesarja;
-			imePrvega = "BRDAUS";
-			imeDrugega = "cesar FRANC JOŽEF";
+			tip.globinaPrvega = globinaBrdausa;
+			tip.globinaDrugega = globinaCesarja;
 			novaIgra();
 		} else if (e.getSource() == r2r2) {
 			tip = TipIgre.rr;
-			globinaPrvega = globinaBrdausa;
-			globinaDrugega = globinaBrdausa;
-			imePrvega = "BRDAUS";
-			imeDrugega = "BRDAUS";
+			tip.globinaPrvega = globinaBrdausa;
+			tip.globinaDrugega = globinaBrdausa;
 			novaIgra();
 		} else if (e.getSource() == r2r3) {
 			tip = TipIgre.rr;
-			globinaPrvega = globinaBrdausa;
-			globinaDrugega = globinaKrpana;
-			imePrvega = "BRDAUS";
-			imeDrugega = "MARTIN KRPAN";
+			tip.globinaPrvega = globinaBrdausa;
+			tip.globinaDrugega = globinaKrpana;
 			novaIgra();
 		} else if (e.getSource() == r3r1) {
 			tip = TipIgre.rr;
-			globinaPrvega = globinaKrpana;
-			globinaDrugega = globinaCesarja;
-			imePrvega = "MARTIN KRPAN";
-			imeDrugega = "cesar FRANC JOŽEF";
+			tip.globinaPrvega = globinaKrpana;
+			tip.globinaDrugega = globinaCesarja;
 			novaIgra();
 		} else if (e.getSource() == r3r2) {
 			tip = TipIgre.rr;
-			globinaPrvega = globinaKrpana;
-			globinaDrugega = globinaBrdausa;
-			imePrvega = "MARTIN KRPAN";
-			imeDrugega = "BRDAUS";
+			tip.globinaPrvega = globinaKrpana;
+			tip.globinaDrugega = globinaBrdausa;
 			novaIgra();
 		} else if (e.getSource() == r3r3) {
 			tip = TipIgre.rr;
-			globinaPrvega = globinaKrpana;
-			globinaDrugega = globinaKrpana;
-			imePrvega = "MARTIN KRPAN";
-			imeDrugega = "MARTIN KRPAN";
+			tip.globinaPrvega = globinaKrpana;
+			tip.globinaDrugega = globinaKrpana;
 			novaIgra();
 		} else if (e.getSource() == barve1) {
 			platno.barvaPrazne = Color.lightGray;
@@ -417,17 +373,28 @@ public class Okno extends JFrame implements ActionListener {
 			
 			JFrame oknoPravil = new JFrame();
 			oknoPravil.setTitle("Pravila igre Cram");
-			oknoPravil.setPreferredSize(new Dimension(300, 200));
-			JLabel besedilo = new JLabel("<html><p style='margin: 10pt'>Igralca izmenično na igralno ploščo </br>"
+			oknoPravil.setFont(new Font(status.getFont().getName(),
+				    status.getFont().getStyle(),
+				    14));
+			final int sirinaOkenca = 400;
+			final int visinaOkenca = 300;
+			oknoPravil.setPreferredSize(new Dimension(sirinaOkenca, visinaOkenca));
+			JLabel besedilo = new JLabel("<html>"
+					+ "<h2 style='padding: 8pt;'>Pravila igre Cram</h2>"
+					+ "<p style='border:3px solid #ffa500; background-color: #eecc44; padding: 8pt; margin: 3pt 0 3pt 0; font-size:120%;'>"
+					+ "Igralca izmenično na igralno ploščo </br>"
 					+ "postavljata ploščice velikosti 1x2. </br>"
 					+ "Ko nek igralec ne more več postaviti </br>"
 					+ "ploščice, je njegov nasprotnik zmagal.</p>"
-					+ "<p style='margin: 10pt'>"
+					+ "<p style='margin: 10pt; font-size:110%'>"
 					+ "Za postavljanje ploščice zaporedoma pritisni </br>"
 					+ "sosednji polji. Izbiro odstrani s ponovnim klikom.</html>");
 			oknoPravil.getContentPane().add(besedilo);
 			oknoPravil.setIconImage(icon);
+			
 			oknoPravil.setLocationRelativeTo(this);
+			oknoPravil.setLocation(oknoPravil.getX()-sirinaOkenca/2, oknoPravil.getY()-visinaOkenca/2);
+			
 			oknoPravil.pack();
 			oknoPravil.setVisible(true);
 			
@@ -464,16 +431,16 @@ public class Okno extends JFrame implements ActionListener {
 			switch(igra.stanje()) {
 			case NA_POTEZI_PRVI: {
 				status.setForeground (platno.barvaPrvega);
-				if (tip == TipIgre.rc || tip == TipIgre.rr) status.setText(imePrvega+" razmislja ...");
-				else status.setText("Na potezi je "+imePrvega);
+				if (tip == TipIgre.rc || tip == TipIgre.rr) status.setText(tip.imena()[0]+" razmislja ...");
+				else status.setText("Na potezi je "+tip.imena()[0]);
 				break;}
 			case NA_POTEZI_DRUGI: {
 				status.setForeground (platno.barvaDrugega);
-				if (tip == TipIgre.cr || tip == TipIgre.rr) status.setText(imeDrugega+" razmislja ...");
-				else status.setText("Na potezi je "+imeDrugega);
+				if (tip == TipIgre.cr || tip == TipIgre.rr) status.setText(tip.imena()[1]+" razmislja ...");
+				else status.setText("Na potezi je "+tip.imena()[1]);
 				break;}
-			case ZMAGA_PRVI: status.setForeground (platno.barvaPrvega); status.setText("Zmagal je "+imePrvega); break;
-			case ZMAGA_DRUGI: status.setForeground (platno.barvaDrugega); status.setText("Zmagal je "+imeDrugega); break;
+			case ZMAGA_PRVI: status.setForeground (platno.barvaPrvega); status.setText("Zmagal je "+tip.imena()[0]); break;
+			case ZMAGA_DRUGI: status.setForeground (platno.barvaDrugega); status.setText("Zmagal je "+tip.imena()[1]); break;
 			}
 		}
 		repaint();

@@ -1,16 +1,8 @@
 package inteligenca;
 
-import java.awt.List;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
-
 import logika.Igra;
 import logika.Igralec;
 import logika.Polje;
-import logika.Poteza;
 import uporabniskiVmesnik.Platno;
 
 /**
@@ -25,9 +17,9 @@ public class Ocena {
 	 * @return max in min st potez do konca igre
 	 */
 	private static int[] minMaxPotez(Igra igra) {
-		int[][][] mM = new int[igra.visinaPlosce+3][igra.sirinaPlosce+3][2];
-		for (int i=0; i<igra.visinaPlosce+3; i++) {
-			for (int j=0; j<igra.sirinaPlosce+3; j++) {
+		int[][][] mM = new int[Igra.visinaPlosce+3][Igra.sirinaPlosce+3][2];
+		for (int i=0; i<Igra.visinaPlosce+3; i++) {
+			for (int j=0; j<Igra.sirinaPlosce+3; j++) {
 				mM[i][j] = new int[] {0, 0};
 				if (i>=3 && j>=3) {
 					// izracun maximuma
@@ -60,14 +52,14 @@ public class Ocena {
 		}
 		
 		// samo en zelo slab priblizek za minimum
-		for (int i=0; i<igra.visinaPlosce; i++) {
-			for (int j=0; j<igra.sirinaPlosce; j++) {
+		for (int i=0; i<Igra.visinaPlosce; i++) {
+			for (int j=0; j<Igra.sirinaPlosce; j++) {
 				if (igra.polje[i][j] == Polje.prazno) {
-					mM[igra.visinaPlosce+2][igra.sirinaPlosce+2][0]++;
+					mM[Igra.visinaPlosce+2][Igra.sirinaPlosce+2][0]++;
 				}
 			}
 		}
-		mM[igra.visinaPlosce+2][igra.sirinaPlosce+2][0] = mM[igra.visinaPlosce+2][igra.sirinaPlosce+2][0]/3;
+		mM[Igra.visinaPlosce+2][Igra.sirinaPlosce+2][0] = mM[Igra.visinaPlosce+2][Igra.sirinaPlosce+2][0]/3;
 		
 		
 		
@@ -75,13 +67,13 @@ public class Ocena {
 		
 		
 		// popravi se formulo za minimum
-		return mM[igra.visinaPlosce+2][igra.sirinaPlosce+2];
+		return mM[Igra.visinaPlosce+2][Igra.sirinaPlosce+2];
 	}
 	
 	/**
-	 * @param jaz igralec, ki želi oceno
+	 * @param jaz igralec, ki ï¿½eli oceno
 	 * @param igra trentno stanje igre (ne spreminjaj tega objekta!)
-	 * @return ocena vrednosti pozicije (èe je igre konec, je ocena zagotovo pravilna)
+	 * @return ocena vrednosti pozicije (ï¿½e je igre konec, je ocena zagotovo pravilna)
 	 */
 	public static int oceniPozicijo(Igralec jaz, Igra igra) {
 		switch (igra.stanje()) {

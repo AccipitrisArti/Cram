@@ -1,8 +1,5 @@
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.io.IOException;
 
-import logika.Igra;
 import uporabniskiVmesnik.Okno;
 
 /**

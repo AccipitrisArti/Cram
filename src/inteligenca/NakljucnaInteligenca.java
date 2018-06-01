@@ -1,12 +1,8 @@
 package inteligenca;
 
-import java.awt.List;
-import java.util.Random;
-
 import javax.swing.SwingWorker;
 
 import logika.Igra;
-import logika.Polje;
 import logika.Poteza;
 import uporabniskiVmesnik.Okno;
 
@@ -25,7 +21,6 @@ public class NakljucnaInteligenca extends SwingWorker<Poteza, Object> {
 	@Override
 	protected Poteza doInBackground() throws Exception {
 		Igra igra = master.copyIgra();
-		Thread.sleep(master.hitrostRacunalnika);
 		if (this.isCancelled()) {
 			System.out.println("Prekinili so me!");
 			return null;

@@ -6,13 +6,9 @@ import logika.Poteza;
 
 public class Clovek extends Strateg {
 	private Okno master;
-	private Igralec jaz;
-	private int globinaRazmisljanja;
 	
 	public Clovek(Okno master, Igralec jaz, int globina) {
 		this.master = master;
-		this.jaz = jaz;
-		globinaRazmisljanja = globina;
 	}
 	
 	@Override

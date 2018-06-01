@@ -1,9 +1,5 @@
 package inteligenca;
 
-import java.sql.Time;
-import java.time.LocalTime;
-import java.util.Timer;
-
 import javax.swing.SwingWorker;
 
 import logika.Igra;
@@ -23,12 +19,12 @@ public class AlphaBeta  extends SwingWorker<Poteza, Object> {
 	private int globina;
 
 	/**
-	 * Ali raèualnik igra PRVI ali DRUGI?
+	 * Ali raï¿½ualnik igra PRVI ali DRUGI?
 	 */
 	private Igralec jaz; // koga igramo
 	
 	/**
-	 * @param master glavno okno, v katerem vleèemo poteze
+	 * @param master glavno okno, v katerem vleï¿½emo poteze
 	 * @param globina koliko potez naprej gledamo
 	 * @param jaz koga igramo
 	 */
@@ -41,7 +37,6 @@ public class AlphaBeta  extends SwingWorker<Poteza, Object> {
 	@Override
 	protected Poteza doInBackground() throws Exception {
 		Igra igra = master.copyIgra();
-		LocalTime cas = LocalTime.now();
 		OcenjenaPoteza p = alphaBeta(0, alpha, beta, igra);
 		assert (p.poteza != null);
 		return p.poteza;
@@ -57,11 +52,11 @@ public class AlphaBeta  extends SwingWorker<Poteza, Object> {
 	}
 
 	/**
-	 * Z metodo alphabeta-rezanje poišèi najboljšo potezo v dani igri.
+	 * Z metodo alphabeta-rezanje poiï¿½ï¿½i najboljï¿½o potezo v dani igri.
 	 * 
-	 * @param k števec globine, do kje smo že preiskali
+	 * @param k ï¿½tevec globine, do kje smo ï¿½e preiskali
 	 * @param igra
-	 * @return najboljša poteza (ali null, èe ji ni), skupaj z oceno najboljše poteze
+	 * @return najboljï¿½a poteza (ali null, ï¿½e ji ni), skupaj z oceno najboljï¿½e poteze
 	 */
 	private OcenjenaPoteza alphaBeta(int k, int alpha, int beta, Igra igra) {
 		Igralec naPotezi = null;
@@ -80,19 +75,19 @@ public class AlphaBeta  extends SwingWorker<Poteza, Object> {
 					(jaz == Igralec.prvi ? Ocena.ZMAGA : Ocena.PORAZ));
 		}
 		assert (naPotezi != null);
-		// Nekdo je na potezi, ugotovimo, kaj se splaèa igrati
+		// Nekdo je na potezi, ugotovimo, kaj se splaï¿½a igrati
 		if (k >= globina) {
-			// dosegli smo najveèjo dovoljeno globino, zato
+			// dosegli smo najveï¿½jo dovoljeno globino, zato
 			// ne vrnemo poteze, ampak samo oceno pozicije
 			return new OcenjenaPoteza(
 					null,
 					Ocena.oceniPozicijo(jaz, igra));
 		}
-		// Hranimo najboljšo do sedaj videno potezo in njeno oceno.
-		// Tu bi bilo bolje imeti seznam do sedaj videnih najboljših potez, ker je lahko
-		// v neki poziciji veè enakovrednih najboljših potez. Te bi lahko zbrali
-		// v seznam, potem pa vrnili nakljuèno izbrano izmed najboljših potez, kar bi
-		// popestrilo igro raèunalnika.
+		// Hranimo najboljï¿½o do sedaj videno potezo in njeno oceno.
+		// Tu bi bilo bolje imeti seznam do sedaj videnih najboljï¿½ih potez, ker je lahko
+		// v neki poziciji veï¿½ enakovrednih najboljï¿½ih potez. Te bi lahko zbrali
+		// v seznam, potem pa vrnili nakljuï¿½no izbrano izmed najboljï¿½ih potez, kar bi
+		// popestrilo igro raï¿½unalnika.
 		Poteza najboljsa = null;
 		
 		// tu bi cas racunanja lahko skrajsal s tem, da bi preostale poteze izracunal le
@@ -103,7 +98,7 @@ public class AlphaBeta  extends SwingWorker<Poteza, Object> {
 				// V kopiji igre odigramo potezo p
 				Igra kopijaIgre = new Igra(igra);
 				kopijaIgre.postaviPloscico(p);
-				// Izraèunamo vrednost pozicije po odigrani potezi p
+				// Izraï¿½unamo vrednost pozicije po odigrani potezi p
 				int ocenaP = alphaBeta(k+1, alpha, beta, kopijaIgre).vrednost;
 				if (ocenaP >= v) {
 					najboljsa = p;
@@ -121,7 +116,7 @@ public class AlphaBeta  extends SwingWorker<Poteza, Object> {
 				// V kopiji igre odigramo potezo p
 				Igra kopijaIgre = new Igra(igra);
 				kopijaIgre.postaviPloscico(p);
-				// Izraèunamo vrednost pozicije po odigrani potezi p
+				// Izraï¿½unamo vrednost pozicije po odigrani potezi p
 				int ocenaP = alphaBeta(k+1, alpha, beta, kopijaIgre).vrednost;
 				if (ocenaP <= v) {
 					najboljsa = p;
