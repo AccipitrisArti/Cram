@@ -39,14 +39,14 @@ public class Okno extends JFrame implements ActionListener {
 	/**
 	 * Statusna vrstica v spodnjem delu okna
 	 */
-	private JLabel status;
+	public JLabel status;
 	
 	/**
 	 * Logika igre, null ce se igra trenutno ne igra
 	 */
 	public Igra igra;
 	
-	private TipIgre tip = TipIgre.cr;
+	public TipIgre tip = TipIgre.cr;
 	private int globinaCesarja = 1;
 	private int globinaBrdausa = 3;
 	private int globinaKrpana = 5;

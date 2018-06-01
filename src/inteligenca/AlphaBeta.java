@@ -90,6 +90,14 @@ public class AlphaBeta  extends SwingWorker<Poteza, Object> {
 		// popestrilo igro ra�unalnika.
 		Poteza najboljsa = null;
 		
+		// na zacetku igre igra nekaj potez nakljucno
+		if ((naPotezi == Igralec.prvi && master.tip.globinaPrvega > 1) ||
+				(naPotezi == Igralec.drugi && master.tip.globinaDrugega > 1))
+			if (igra.preostalePoteze().size() > Igra.sirinaPlosce*Igra.visinaPlosce) {
+			master.status.setText("Naključen met računalnika");
+			return new OcenjenaPoteza(igra.preostalePoteze().iterator().next(), 0);
+		}
+		
 		// tu bi cas racunanja lahko skrajsal s tem, da bi preostale poteze izracunal le
 		// na zacetku, potem pa bi jih ven brisal iz seznama
 		if (naPotezi == jaz) {
