@@ -83,7 +83,7 @@ public class AlphaBeta  extends SwingWorker<Poteza, Object> {
 					null,
 					Ocena.oceniPozicijo(jaz, igra));
 		}
-		// Hranimo najbolj�o do sedaj videno potezo in njeno oceno.
+		// Hranimo najboljšo do sedaj videno potezo in njeno oceno.
 		// Tu bi bilo bolje imeti seznam do sedaj videnih najbolj�ih potez, ker je lahko
 		// v neki poziciji ve� enakovrednih najbolj�ih potez. Te bi lahko zbrali
 		// v seznam, potem pa vrnili naklju�no izbrano izmed najbolj�ih potez, kar bi
@@ -91,13 +91,10 @@ public class AlphaBeta  extends SwingWorker<Poteza, Object> {
 		Poteza najboljsa = null;
 		
 		// na zacetku igre igra nekaj potez nakljucno
-		if ((naPotezi == Igralec.prvi && master.tip.globinaPrvega > 1) ||
-				(naPotezi == Igralec.drugi && master.tip.globinaDrugega > 1))
-			if (igra.preostalePoteze().size() > Igra.sirinaPlosce*Igra.visinaPlosce) {
+		if (k == 0 && Ocena.minMaxPotez(igra)[1]-Ocena.minMaxPotez(igra)[0]>11) {
 			master.status.setText("Naključen met računalnika");
 			return new OcenjenaPoteza(igra.preostalePoteze().iterator().next(), 0);
 		}
-		
 		// tu bi cas racunanja lahko skrajsal s tem, da bi preostale poteze izracunal le
 		// na zacetku, potem pa bi jih ven brisal iz seznama
 		if (naPotezi == jaz) {

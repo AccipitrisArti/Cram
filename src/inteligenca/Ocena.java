@@ -16,7 +16,7 @@ public class Ocena {
 	 * @param igra
 	 * @return max in min st potez do konca igre
 	 */
-	private static int[] minMaxPotez(Igra igra) {
+	protected static int[] minMaxPotez(Igra igra) {
 		int[][][] mM = new int[Igra.visinaPlosce+3][Igra.sirinaPlosce+3][2];
 		for (int i=0; i<Igra.visinaPlosce+3; i++) {
 			for (int j=0; j<Igra.sirinaPlosce+3; j++) {
@@ -55,13 +55,18 @@ public class Ocena {
 		for (int i=0; i<Igra.visinaPlosce; i++) {
 			for (int j=0; j<Igra.sirinaPlosce; j++) {
 				if (igra.polje[i][j] == Polje.prazno) {
-					mM[Igra.visinaPlosce+2][Igra.sirinaPlosce+2][0]++;
+					// ce polje ima vsaj dva prazna soseda, povecaj min za 2/3, sicer za 1
+					int stPraznihSosedov = 0;
+					if (i > 0 && igra.polje[i-1][j] == Polje.prazno) stPraznihSosedov ++;
+					if (i < Igra.visinaPlosce-1 && igra.polje[i+1][j] == Polje.prazno) stPraznihSosedov ++;
+					if (j > 0 && igra.polje[i][j-1] == Polje.prazno) stPraznihSosedov ++;
+					if (j < Igra.sirinaPlosce-1 && igra.polje[i][j+1] == Polje.prazno) stPraznihSosedov ++;
+					if (stPraznihSosedov == 1) mM[Igra.visinaPlosce+2][Igra.sirinaPlosce+2][0] += 3;
+					else if (stPraznihSosedov > 1) mM[Igra.visinaPlosce+2][Igra.sirinaPlosce+2][0] += 2;
 				}
 			}
 		}
-		mM[Igra.visinaPlosce+2][Igra.sirinaPlosce+2][0] = mM[Igra.visinaPlosce+2][Igra.sirinaPlosce+2][0]/3;
-		
-		
+		mM[Igra.visinaPlosce+2][Igra.sirinaPlosce+2][0] = mM[Igra.visinaPlosce+2][Igra.sirinaPlosce+2][0]/6;
 		
 		
 		

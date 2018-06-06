@@ -431,12 +431,12 @@ public class Okno extends JFrame implements ActionListener {
 			switch(igra.stanje()) {
 			case NA_POTEZI_PRVI: {
 				status.setForeground (platno.barvaPrvega);
-				if (tip == TipIgre.rc || tip == TipIgre.rr) status.setText(tip.imena()[0]+" razmislja ...");
+				if (tip == TipIgre.rc || tip == TipIgre.rr) status.setText(tip.imena()[0]+" razmišlja ...");
 				else status.setText("Na potezi je "+tip.imena()[0]);
 				break;}
 			case NA_POTEZI_DRUGI: {
 				status.setForeground (platno.barvaDrugega);
-				if (tip == TipIgre.cr || tip == TipIgre.rr) status.setText(tip.imena()[1]+" razmislja ...");
+				if (tip == TipIgre.cr || tip == TipIgre.rr) status.setText(tip.imena()[1]+" razmišlja ...");
 				else status.setText("Na potezi je "+tip.imena()[1]);
 				break;}
 			case ZMAGA_PRVI: status.setForeground (platno.barvaPrvega); status.setText("Zmagal je "+tip.imena()[0]); break;

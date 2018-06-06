@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class Igra {
 	
-	public static int visinaPlosce = 8;
+	public static int visinaPlosce = 10;
 	public static int sirinaPlosce = 10;
 	public Polje[][] polje;
 	protected Igralec naPotezi;
@@ -60,7 +60,7 @@ public class Igra {
 	}
 	
 	/**
-	 * @return true, ce obstaja še kakšna poteza
+	 * @return true, ce obstaja ï¿½e kakï¿½na poteza
 	 */
 	public boolean obstajaPoteza() {
 		for (int i = 0; i < visinaPlosce; i++) {
@@ -99,7 +99,7 @@ public class Igra {
 		// Ali imamo zmagovalca?
 		Stanje s;
 		if (obstajaPoteza()) {
-			// igre še ni konec
+			// igre ï¿½e ni konec
 			if (naPotezi == Igralec.prvi) {
 				s = Stanje.NA_POTEZI_PRVI;
 			} else {

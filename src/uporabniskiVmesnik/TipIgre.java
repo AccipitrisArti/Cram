@@ -12,8 +12,8 @@ import java.util.Map;
 public enum TipIgre {
 	cc, rc, cr, rr;
 	
-	public int globinaPrvega = 1;
-	public int globinaDrugega = 3;
+	public int globinaPrvega = 5;
+	public int globinaDrugega = 5;
 	
 	protected Map<Integer, String> nasprotniki = new HashMap<Integer, String>();
 	{
