@@ -84,23 +84,12 @@ public class AlphaBeta  extends SwingWorker<Poteza, Object> {
 					Ocena.oceniPozicijo(jaz, igra));
 		}
 		// Hranimo najboljšo do sedaj videno potezo in njeno oceno.
-		// Tu bi bilo bolje imeti seznam do sedaj videnih najbolj�ih potez, ker je lahko
-		// v neki poziciji ve� enakovrednih najbolj�ih potez. Te bi lahko zbrali
-		// v seznam, potem pa vrnili naklju�no izbrano izmed najbolj�ih potez, kar bi
-		// popestrilo igro ra�unalnika.
 		Poteza najboljsa = null;
 		
-		// na zacetku igre igra nekaj potez nakljucno
-		if (k == 0 && Ocena.minMaxPotez(igra)[1]-Ocena.minMaxPotez(igra)[0]>11) {
-			master.status.setText("Naključen met računalnika");
-			return new OcenjenaPoteza(igra.preostalePoteze().iterator().next(), 0);
-		}
-		// tu bi cas racunanja lahko skrajsal s tem, da bi preostale poteze izracunal le
-		// na zacetku, potem pa bi jih ven brisal iz seznama
 		if (naPotezi == jaz) {
 			int v = Ocena.PORAZ;
 			for (Poteza p : igra.preostalePoteze()) {
-				// V kopiji igre odigramo potezo p
+				// V kopiji igre odigramo potezo p (mnozica poskrbi za nakljucnost izbire p)
 				Igra kopijaIgre = new Igra(igra);
 				kopijaIgre.postaviPloscico(p);
 				// Izra�unamo vrednost pozicije po odigrani potezi p

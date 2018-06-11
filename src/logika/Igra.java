@@ -5,8 +5,8 @@ import java.util.Set;
 
 public class Igra {
 	
-	public static int visinaPlosce = 10;
-	public static int sirinaPlosce = 10;
+	public static int visinaPlosce = 8;
+	public static int sirinaPlosce = 8;
 	public Polje[][] polje;
 	protected Igralec naPotezi;
 	
@@ -60,7 +60,7 @@ public class Igra {
 	}
 	
 	/**
-	 * @return true, ce obstaja �e kak�na poteza
+	 * @return true, če obstaja še kakšna poteza
 	 */
 	public boolean obstajaPoteza() {
 		for (int i = 0; i < visinaPlosce; i++) {
@@ -81,25 +81,29 @@ public class Igra {
 	}
 	
 	/**
-	 * @return true, ce je poteza veljavna
+	 * @return true, če je poteza veljavna
 	 */
-	public boolean veljavnaPoteza(int i1, int j1, int i2, int j2) {
-		if (polje[i1][j1] == Polje.prazno && polje[i2][j2] == Polje.prazno &&
-				Math.abs(i1-i2)+Math.abs(j1-j2) == 1 &&
-				i1<visinaPlosce && i2<visinaPlosce && j2<sirinaPlosce && j1<sirinaPlosce) {
+	public boolean veljavnaPoteza(Poteza poteza) {
+		// preveri, če sta polji na plošči, če sta sosedni in prazni
+		// upoštevamo, da je poteza že leksikografsko urejena
+		if (poteza.getY2()<visinaPlosce && poteza.getX2()<sirinaPlosce &&
+				poteza.getY1()>=0 && poteza.getX1()>=0 &&
+				polje[poteza.getY1()][poteza.getX1()] == Polje.prazno && polje[poteza.getY2()][poteza.getX2()] == Polje.prazno &&
+				Math.abs(poteza.getY1()-poteza.getY2())+Math.abs(poteza.getX1()-poteza.getX2()) == 1
+				) {
 					return true;
 		}
 		return false;
 	}
 	
 	/**
-	 * @return trenutno stanje igre
+	 * @return trenutno stanje igre (kdo je na potezi/zmagal)
 	 */
 	public Stanje stanje() {
 		// Ali imamo zmagovalca?
 		Stanje s;
 		if (obstajaPoteza()) {
-			// igre �e ni konec
+			// igre še ni konec
 			if (naPotezi == Igralec.prvi) {
 				s = Stanje.NA_POTEZI_PRVI;
 			} else {
@@ -125,7 +129,7 @@ public class Igra {
 	 * @return true, ce je bila poteza izvedena, sicer false
 	 */
 	public boolean postaviPloscico(Poteza p) {
-		if (veljavnaPoteza(p.getY1(), p.getX1(), p.getY2(), p.getX2())) {
+		if (veljavnaPoteza(p)) {
 			polje[p.getY1()][p.getX1()] = naPotezi.getPolje();
 			polje[p.getY2()][p.getX2()] = naPotezi.getPolje();
 			naPotezi = naPotezi.nasprotnik();

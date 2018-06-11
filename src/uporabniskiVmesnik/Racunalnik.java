@@ -22,6 +22,8 @@ public class Racunalnik extends Strateg  {
 	public void na_potezi() {
 		// Začnemo razmišljati
 		mislec = new AlphaBeta(master, globinaRazmisljanja, jaz);
+		// mislec = new Minimax(master, globinaRazmisljanja, jaz);
+		// mislec = new NakljucnaInteligenca(master);
 		mislec.execute();
 	}
 

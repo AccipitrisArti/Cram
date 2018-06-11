@@ -22,8 +22,8 @@ public class Ocena {
 			for (int j=0; j<Igra.sirinaPlosce+3; j++) {
 				mM[i][j] = new int[] {0, 0};
 				if (i>=3 && j>=3) {
-					// izracun maximuma
-					// sestejemo vrednosti v levem in zgornjem sosedu, odstejemo vrednost v levem-zgornem sosedu
+					// izracun maximuma (dinamicno programiranje)
+					// sestejemo vrednosti v levem in zgornjem sosedu, odstejemo vrednost v levo-zgornjem sosedu
 					// ce polje prazno in prazen zgornji sosed pristejemo 1,
 					// ce imajo vrednosti v levem 2x2 polju enake vsote po diagonalah
 					// simetricno za zgornje 2x2 polje, ko sta polje in levi sosed prazna
@@ -67,11 +67,7 @@ public class Ocena {
 			}
 		}
 		mM[Igra.visinaPlosce+2][Igra.sirinaPlosce+2][0] = mM[Igra.visinaPlosce+2][Igra.sirinaPlosce+2][0]/6;
-		
-		
-		
-		
-		// popravi se formulo za minimum
+
 		return mM[Igra.visinaPlosce+2][Igra.sirinaPlosce+2];
 	}
 	
@@ -107,23 +103,6 @@ public class Ocena {
 				vrednostDrugi = (mM[1]-mM[0]-1)*mM[1];
 			}
 			
-			
-			
-			
-			
-			// tu bo nastavil vrednost za prvega in za drugega
-			// iz max in min bo izracunal vrednost za prvega in vrednost za drugega igralca
-			// ekstremne vrednosti za pozicijo so ko je min enak max, ker je rezultat ze dolocen
-			// (v tem primeru vrednost igre odvisna od tega kdo je navrsti in koliko je potez)
-			// sicer pa je igra bolj vredna, ce je razlika med min in max vecja (vec moznosti za spreminjanje rezultata)
-			// ce je razlika med max in min  v celotni igri 1 je to veliko vredno ce si na vrsti, manj ce nisi?
-			
-			
-			
-			
-			// ko je narejeno do tu, sledi le se casovna optimizacija (cim manj izracunavanja
-			// vseh preostalih potez pri razmisljanju racunalnika, lahko se izracuna enkrat ob konstrukciji igre in potem brise na objektu igra),
-			// lepsanje kode, komentiranje, moznost (rac-rac/clovek-rac/...), izbiranje tezavnosi (beginer/...)
 			return (jaz == Igralec.drugi ? (vrednostDrugi - vrednostPrvi/2) : (vrednostPrvi - vrednostDrugi/2));
 		}
 		assert false;

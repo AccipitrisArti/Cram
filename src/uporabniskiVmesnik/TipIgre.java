@@ -6,24 +6,31 @@ import java.util.Map;
 /**
  * @author MarinkoA15, PristovnikJ15
  * ii - igralec vs. igralec
- * i = r -> igralec = racunalnik
- * i = c -> igralec = clovek
+ * i == r -> igralec = računalnik
+ * i == c -> igralec = človek
  */
 public enum TipIgre {
 	cc, rc, cr, rr;
 	
-	public int globinaPrvega = 5;
-	public int globinaDrugega = 5;
+	public int globinaPrvega = 3;
+	public int globinaDrugega = 3;
 	
+	int globinaCesarja = 1;
+	int globinaBrdausa = 3;
+	int globinaKrpana = 5;
+	
+	// naredimo slovar nekaj globin z imeni
 	protected Map<Integer, String> nasprotniki = new HashMap<Integer, String>();
 	{
-		nasprotniki.put(1, "cesar FRANC JOŽEF");
-		nasprotniki.put(3, "BRDAUS");
-		nasprotniki.put(5, "MARTIN KRPAN");
+		nasprotniki.put(globinaCesarja, "cesar FRANC JOŽEF");
+		nasprotniki.put(globinaBrdausa, "BRDAUS");
+		nasprotniki.put(globinaKrpana, "MARTIN KRPAN");
 	}
 	
 	protected String[] imena() {
 		String[] imena = new String[2];
+		// če izbranih globin ni v slovarju nasprotniki, bo izbral privzeta imena PRVI, DRUGI za človeka
+		// računalniku pa bo dal ime iz slovarja (če ne obstaja ga bo sam zgeneriral)
 		imena[0] = "PRVI";
 		imena[1] = "DRUGI";
 		if (this == TipIgre.rc || this == TipIgre.rr) {

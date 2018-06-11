@@ -25,11 +25,6 @@ import logika.Poteza;
 
 @SuppressWarnings("serial")
 public class Okno extends JFrame implements ActionListener {
-
-	/**
-	 * cas, ko se racunalnik pretvarja, da razmislja
-	 */
-	public int hitrostRacunalnika = 100;
 	
 	/**
 	 * platno, kjer se izrisuje igra
@@ -46,17 +41,15 @@ public class Okno extends JFrame implements ActionListener {
 	 */
 	public Igra igra;
 	
+	// privyeto igramo proti racunalniku
 	public TipIgre tip = TipIgre.cr;
-	private int globinaCesarja = 1;
-	private int globinaBrdausa = 3;
-	private int globinaKrpana = 5;
 	
 	/**
-	 * Strateg, ki postavlja rdece ploscice.
+	 * Strateg, ki postavlja sive ploscice (v osnovni barvni paleti 1).
 	 */
 	private Strateg strategPrvi;
 	/**
-	 * Strateg, ki postavlja modre ploscice
+	 * Strateg, ki postavlja rdece ploscice (v osnovni barvni paleti 1).
 	 */
 	private Strateg strategDrugi;
 	
@@ -106,6 +99,7 @@ public class Okno extends JFrame implements ActionListener {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new GridBagLayout());
 		
+		// nastavi ikono programa
 		this.setIconImage(icon);
 	    
 		platno = new Platno(this);
@@ -117,7 +111,7 @@ public class Okno extends JFrame implements ActionListener {
 		platno_layout.weighty = 1.0;
 		getContentPane().add(platno, platno_layout);
 		
-		// statusna vrstica za sporo�ila
+		// statusna vrstica za sporocila
 		status = new JLabel();
 		status.setFont(new Font(status.getFont().getName(),
 							    status.getFont().getStyle(),
@@ -260,72 +254,72 @@ public class Okno extends JFrame implements ActionListener {
 			novaIgra();
 		} else if (e.getSource() == cr1) {
 			tip = TipIgre.cr;
-			tip.globinaDrugega = globinaCesarja;
+			tip.globinaDrugega = tip.globinaCesarja;
 			novaIgra();
 		} else if (e.getSource() == cr2) {
 			tip = TipIgre.cr;
-			tip.globinaDrugega = globinaBrdausa;
+			tip.globinaDrugega = tip.globinaBrdausa;
 			novaIgra();
 		} else if (e.getSource() == cr3) {
 			tip = TipIgre.cr;
-			tip.globinaDrugega = globinaKrpana;
+			tip.globinaDrugega = tip.globinaKrpana;
 			novaIgra();
 		} else if (e.getSource() == rc1) {
 			tip = TipIgre.rc;
-			tip.globinaPrvega = globinaCesarja;
+			tip.globinaPrvega = tip.globinaCesarja;
 			novaIgra();
 		} else if (e.getSource() == rc2) {
 			tip = TipIgre.rc;
-			tip.globinaPrvega = globinaBrdausa;
+			tip.globinaPrvega = tip.globinaBrdausa;
 			novaIgra();
 		} else if (e.getSource() == rc3) {
 			tip = TipIgre.rc;
-			tip.globinaPrvega = globinaKrpana;
+			tip.globinaPrvega = tip.globinaKrpana;
 			novaIgra();
 		} else if (e.getSource() == r1r1) {
 			tip = TipIgre.rr;
-			tip.globinaPrvega = globinaCesarja;
-			tip.globinaDrugega = globinaCesarja;
+			tip.globinaPrvega = tip.globinaCesarja;
+			tip.globinaDrugega = tip.globinaCesarja;
 			novaIgra();
 		} else if (e.getSource() == r1r2) {
 			tip = TipIgre.rr;
-			tip.globinaPrvega = globinaCesarja;
-			tip.globinaDrugega = globinaBrdausa;
+			tip.globinaPrvega = tip.globinaCesarja;
+			tip.globinaDrugega = tip.globinaBrdausa;
 			novaIgra();
 		} else if (e.getSource() == r1r3) {
 			tip = TipIgre.rr;
-			tip.globinaPrvega = globinaCesarja;
-			tip.globinaDrugega = globinaKrpana;
+			tip.globinaPrvega = tip.globinaCesarja;
+			tip.globinaDrugega = tip.globinaKrpana;
 			novaIgra();
 		} else if (e.getSource() == r2r1) {
 			tip = TipIgre.rr;
-			tip.globinaPrvega = globinaBrdausa;
-			tip.globinaDrugega = globinaCesarja;
+			tip.globinaPrvega = tip.globinaBrdausa;
+			tip.globinaDrugega = tip.globinaCesarja;
 			novaIgra();
 		} else if (e.getSource() == r2r2) {
 			tip = TipIgre.rr;
-			tip.globinaPrvega = globinaBrdausa;
-			tip.globinaDrugega = globinaBrdausa;
+			tip.globinaPrvega = tip.globinaBrdausa;
+			tip.globinaDrugega = tip.globinaBrdausa;
 			novaIgra();
 		} else if (e.getSource() == r2r3) {
 			tip = TipIgre.rr;
-			tip.globinaPrvega = globinaBrdausa;
-			tip.globinaDrugega = globinaKrpana;
+			tip.globinaPrvega = tip.globinaBrdausa;
+			tip.globinaDrugega = tip.globinaKrpana;
 			novaIgra();
 		} else if (e.getSource() == r3r1) {
 			tip = TipIgre.rr;
-			tip.globinaPrvega = globinaKrpana;
-			tip.globinaDrugega = globinaCesarja;
+			tip.globinaPrvega = tip.globinaKrpana;
+			tip.globinaDrugega = tip.globinaCesarja;
 			novaIgra();
 		} else if (e.getSource() == r3r2) {
 			tip = TipIgre.rr;
-			tip.globinaPrvega = globinaKrpana;
-			tip.globinaDrugega = globinaBrdausa;
+			tip.globinaPrvega = tip.globinaKrpana;
+			tip.globinaDrugega = tip.globinaBrdausa;
 			novaIgra();
 		} else if (e.getSource() == r3r3) {
 			tip = TipIgre.rr;
-			tip.globinaPrvega = globinaKrpana;
-			tip.globinaDrugega = globinaKrpana;
+			tip.globinaPrvega = tip.globinaKrpana;
+			tip.globinaDrugega = tip.globinaKrpana;
 			novaIgra();
 		} else if (e.getSource() == barve1) {
 			platno.barvaPrazne = Color.lightGray;

@@ -14,14 +14,14 @@ import logika.Polje;
 @SuppressWarnings("serial")
 public class Platno extends JPanel implements MouseListener {
 	
-	protected int sirina = 800;
-	protected int visina = 640;
 	protected Okno okno;
 	protected Color barvaPrazne = Color.lightGray;
 	protected Color barvaPrvega = Color.darkGray;
 	protected Color barvaDrugega = Color.red;
 	protected Color barvaOznacenega = Color.orange;
 	protected Color barvaOkna = Color.WHITE;
+	protected int sirina = Igra.sirinaPlosce * 64;
+	protected int visina = Igra.visinaPlosce * 64;
 	
 	// shranimo polje, iz katerega postavljamo ploscico (oznacena ploscica)
 	// ce je vrednost -1, polje se ni bilo izbrano

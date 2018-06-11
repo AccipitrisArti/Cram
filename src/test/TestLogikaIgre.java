@@ -14,7 +14,7 @@ public class TestLogikaIgre extends TestCase {
 				igra.preostalePoteze().size());
 		// Naredimo eno potezo
 		igra.postaviPloscico(igra.preostalePoteze().iterator().next());
-		// Sedaj je na potezi drugi in imamo eno potezo manj
+		// Sedaj je na potezi drugi
 		assertEquals(Stanje.NA_POTEZI_DRUGI, igra.stanje());
 	}
 }

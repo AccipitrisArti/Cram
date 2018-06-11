@@ -17,12 +17,12 @@ public class Minimax  extends SwingWorker<Poteza, Object> {
 	private int globina;
 
 	/**
-	 * Ali raèualnik igra PRVI ali DRUGI?
+	 * Ali raï¿½ualnik igra PRVI ali DRUGI?
 	 */
 	private Igralec jaz; // koga igramo
 	
 	/**
-	 * @param master glavno okno, v katerem vleèemo poteze
+	 * @param master glavno okno, v katerem vleï¿½emo poteze
 	 * @param globina koliko potez naprej gledamo
 	 * @param jaz koga igramo
 	 */
@@ -50,11 +50,11 @@ public class Minimax  extends SwingWorker<Poteza, Object> {
 	}
 
 	/**
-	 * Z metodo minimax poišèi najboljšo potezo v dani igri.
+	 * Z metodo minimax poiï¿½ï¿½i najboljï¿½o potezo v dani igri.
 	 * 
-	 * @param k števec globine, do kje smo že preiskali
+	 * @param k ï¿½tevec globine, do kje smo ï¿½e preiskali
 	 * @param igra
-	 * @return najboljša poteza (ali null, èe ji ni), skupaj z oceno najboljše poteze
+	 * @return najboljï¿½a poteza (ali null, ï¿½e ji ni), skupaj z oceno najboljï¿½e poteze
 	 */
 	private OcenjenaPoteza minimax(int k, Igra igra) {
 		Igralec naPotezi = null;
@@ -73,40 +73,35 @@ public class Minimax  extends SwingWorker<Poteza, Object> {
 					(jaz == Igralec.prvi ? Ocena.ZMAGA : Ocena.PORAZ));
 		}
 		assert (naPotezi != null);
-		// Nekdo je na potezi, ugotovimo, kaj se splaèa igrati
+		// Nekdo je na potezi, ugotovimo, kaj se splaï¿½a igrati
 		if (k >= globina) {
-			// dosegli smo najveèjo dovoljeno globino, zato
+			// dosegli smo najveï¿½jo dovoljeno globino, zato
 			// ne vrnemo poteze, ampak samo oceno pozicije
 			return new OcenjenaPoteza(
 					null,
 					Ocena.oceniPozicijo(jaz, igra));
 		}
-		// Hranimo najboljšo do sedaj videno potezo in njeno oceno.
-		// Tu bi bilo bolje imeti seznam do sedaj videnih najboljših potez, ker je lahko
-		// v neki poziciji veè enakovrednih najboljših potez. Te bi lahko zbrali
-		// v seznam, potem pa vrnili nakljuèno izbrano izmed najboljših potez, kar bi
-		// popestrilo igro raèunalnika.
+		// Hranimo najboljï¿½o do sedaj videno potezo in njeno oceno.
 		Poteza najboljsa = null;
 		int ocenaNajboljse = 0;
 		
-		// tu bi cas racunanja lahko skrajsal s tem, da bi preostale poteze izracunal le
-		// na zacetku, potem pa bi jih ven brisal iz seznama
+		// mnozica preostalePoteze poskrbi za nakljucnost (nepredvidljivost)
 		for (Poteza p : igra.preostalePoteze()) {
 			// V kopiji igre odigramo potezo p
 			Igra kopijaIgre = new Igra(igra);
 			kopijaIgre.postaviPloscico(p);
-			// Izraèunamo vrednost pozicije po odigrani potezi p
+			// Izraï¿½unamo vrednost pozicije po odigrani potezi p
 			int ocenaP = minimax(k+1, kopijaIgre).vrednost;
-			// Èe je p boljša poteza, si jo zabeležimo
-			if (najboljsa == null // še nimamo kandidata za najboljšo potezo
-				|| (naPotezi == jaz && ocenaP > ocenaNajboljse) // maksimiziramo
-				|| (naPotezi != jaz && ocenaP < ocenaNajboljse) // minimiziramo
+			// ï¿½e je p boljï¿½a poteza, si jo zabeleï¿½imo
+			if (najboljsa == null // ï¿½e nimamo kandidata za najboljï¿½o potezo
+				|| (naPotezi == jaz && ocenaP > ocenaNajboljse) // maksimiziram, ce sem na potezi
+				|| (naPotezi != jaz && ocenaP < ocenaNajboljse) // minimiziramo, ce nisem
 				) {
 				najboljsa = p;
 				ocenaNajboljse = ocenaP;
 			}
 		}
-		// Vrnemo najboljšo najdeno potezo in njeno oceno
+		// Vrnemo najboljï¿½o najdeno potezo in njeno oceno
 		assert (najboljsa != null);
 		return new OcenjenaPoteza(najboljsa, ocenaNajboljse);
 	}
