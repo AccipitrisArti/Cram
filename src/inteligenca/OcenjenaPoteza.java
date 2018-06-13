@@ -4,7 +4,7 @@ import logika.Poteza;
 
 /**
  * Poteza z oceno, kako dobra je ocena.
- * Poteza je lahko tudi {@null} (èe je npr. konec igre),
+ * Poteza je lahko tudi {@null} (ce je npr. konec igre),
  * v tem primeru ocena pove, kako dobra je pozicija.
  */
 public class OcenjenaPoteza {
