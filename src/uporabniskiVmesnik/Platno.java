@@ -90,7 +90,7 @@ public class Platno extends JPanel implements MouseListener {
 		if (round((1-sirinaRoba)*50)>Math.abs(e.getX()*100/velikostPolja()-round(e.getX()/velikostPolja())*100-50)) {
 			izbJ = round(e.getX()/velikostPolja());
 		}
-		// ce polje obstaja in je prazno, klicemo funkcijo klikniPolje iz Platno
+		// ce polje obstaja in je prazno, klicemo funkcijo klikniPolje iz Okno
 		if (izbI >= 0 &&
 				izbI < Igra.visinaPlosce &&
 				izbJ >= 0 &&
