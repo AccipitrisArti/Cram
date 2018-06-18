@@ -19,12 +19,12 @@ public class AlphaBeta  extends SwingWorker<Poteza, Object> {
 	private int globina;
 
 	/**
-	 * Ali ra�ualnik igra PRVI ali DRUGI?
+	 * Ali racualnik igra PRVI ali DRUGI?
 	 */
 	private Igralec jaz; // koga igramo
 	
 	/**
-	 * @param master glavno okno, v katerem vle�emo poteze
+	 * @param master glavno okno, v katerem vlecemo poteze
 	 * @param globina koliko potez naprej gledamo
 	 * @param jaz koga igramo
 	 */
@@ -52,11 +52,11 @@ public class AlphaBeta  extends SwingWorker<Poteza, Object> {
 	}
 
 	/**
-	 * Z metodo alphabeta-rezanje poi��i najbolj�o potezo v dani igri.
+	 * Z metodo alphabeta-rezanje poisci najboljso potezo v dani igri.
 	 * 
-	 * @param k �tevec globine, do kje smo �e preiskali
+	 * @param k stevec globine, do kje smo ze preiskali
 	 * @param igra
-	 * @return najbolj�a poteza (ali null, �e ji ni), skupaj z oceno najbolj�e poteze
+	 * @return najboljsa poteza (ali null, ce ji ni), skupaj z oceno najboljse poteze
 	 */
 	private OcenjenaPoteza alphaBeta(int k, int alpha, int beta, Igra igra) {
 		Igralec naPotezi = null;
@@ -75,9 +75,9 @@ public class AlphaBeta  extends SwingWorker<Poteza, Object> {
 					(jaz == Igralec.prvi ? Ocena.ZMAGA : Ocena.PORAZ));
 		}
 		assert (naPotezi != null);
-		// Nekdo je na potezi, ugotovimo, kaj se spla�a igrati
+		// Nekdo je na potezi, ugotovimo, kaj se splaca igrati
 		if (k >= globina) {
-			// dosegli smo najve�jo dovoljeno globino, zato
+			// dosegli smo najvecjo dovoljeno globino, zato
 			// ne vrnemo poteze, ampak samo oceno pozicije
 			return new OcenjenaPoteza(
 					null,
@@ -92,7 +92,7 @@ public class AlphaBeta  extends SwingWorker<Poteza, Object> {
 				// V kopiji igre odigramo potezo p (mnozica poskrbi za nakljucnost izbire p)
 				Igra kopijaIgre = new Igra(igra);
 				kopijaIgre.postaviPloscico(p);
-				// Izra�unamo vrednost pozicije po odigrani potezi p
+				// Izracunamo vrednost pozicije po odigrani potezi p
 				int ocenaP = alphaBeta(k+1, alpha, beta, kopijaIgre).vrednost;
 				if (ocenaP >= v) {
 					najboljsa = p;
@@ -110,7 +110,7 @@ public class AlphaBeta  extends SwingWorker<Poteza, Object> {
 				// V kopiji igre odigramo potezo p
 				Igra kopijaIgre = new Igra(igra);
 				kopijaIgre.postaviPloscico(p);
-				// Izra�unamo vrednost pozicije po odigrani potezi p
+				// Izracunamo vrednost pozicije po odigrani potezi p
 				int ocenaP = alphaBeta(k+1, alpha, beta, kopijaIgre).vrednost;
 				if (ocenaP <= v) {
 					najboljsa = p;
