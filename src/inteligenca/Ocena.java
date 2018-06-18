@@ -72,9 +72,9 @@ public class Ocena {
 	}
 	
 	/**
-	 * @param jaz igralec, ki �eli oceno
-	 * @param igra trentno stanje igre (ne spreminjaj tega objekta!)
-	 * @return ocena vrednosti pozicije (�e je igre konec, je ocena zagotovo pravilna)
+	 * @param jaz igralec, ki zeli oceno
+	 * @param igra trenutno stanje igre (ne spreminjaj tega objekta!)
+	 * @return ocena vrednosti pozicije (ce je igre konec, je ocena zagotovo pravilna)
 	 */
 	public static int oceniPozicijo(Igralec jaz, Igra igra) {
 		switch (igra.stanje()) {
